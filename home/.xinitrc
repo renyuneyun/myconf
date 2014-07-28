@@ -2,7 +2,7 @@
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
-export LANGUAGE="zh_CN.UTF-8:zh_CN.GB18030:zh_TW.BIG5"
+export LANGUAGE="zh_CN.UTF-8:zh_CN.GB18030:zh_TW:en_US"
 
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
@@ -48,6 +48,7 @@ run_progs
 
 S_KDE="/usr/bin/startkde"
 S_KDE_FAILSAFE="/usr/bin/startkde --failsafe"
+S_GNOME="/usr/bin/gnome-session"
 S_ENLIGHTENMENT="/usr/bin/enlightenment_start"
 S_AWESOME="/usr/bin/awesome"
 S_QTILE="/usr/bin/qtile-session"
@@ -60,6 +61,9 @@ function run_session() {
 			;;
 		$S_KDE_FAILSAFE)
 			exec $S_KDE_FAILSAFE
+			;;
+		$S_GNOME)
+			exec $S_GNOME
 			;;
 		$S_AWESOME)
 			exec nm-applet &
@@ -87,6 +91,9 @@ if [ -n $2 ]; then
 		$S_KDE_FAILSAFE|"kde failsafe")
 			SESSION=$S_KDE_FAILSAFE
 			;;
+		$GNOME|"gnome")
+			SESSION=$S_GNOME
+			;;
 		$S_AWESOME|"awesome")
 			SESSION=$S_AWESOME
 			;;
@@ -101,31 +108,6 @@ else
 	SESSION=$DEFAULT_SESSION
 fi
 run_session $SESSION
-
-#Slim setting[[0
-#if [ -n $1 ]; then
-#	echo $1 > /tmp/session
-#	case $1 in
-#		$S_KDE|"kde")
-#			exec $S_KDE
-#			;;
-#		$S_KDE_FAILSAFE|"kde failsafe")
-#			exec $S_KDE_FAILSAFE
-#			;;
-#		$S_AWESOME|"awesome")
-#			exec nm-applet &
-#			exec guake &
-#			exec $S_AWESOME
-#			;;
-#		*)
-#			exec nm-applet &
-#			exec $DEFAULT_SESSION
-#			;;
-#	esac
-#else
-#	exec $DEFAULT_SESSION
-#fi
-#0]]
 
 function clean_up() {
 	calised --stop
