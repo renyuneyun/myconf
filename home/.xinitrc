@@ -1,4 +1,8 @@
 #!/bin/sh
+LOG=/tmp/startx.log
+
+echo $# > $LOG
+echo $* >> $LOG
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
@@ -8,7 +12,7 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
-#export OXYGEN_DISABLE_INNER_SHADOWS_HACK=1
+#export OXYGEN_DISABLE_INNER_SHADOWS_HACK=1 #A hack for monodevelop
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -38,10 +42,10 @@ fi
 
 function run_progs() {
 	fcitx-autostart &
-	env -u PYTHONPATH calised &
 	#Now as systemd daemon[[[0
 	#transmission-daemon
 	#exec aria2c &
+	#env -u PYTHONPATH calised &
 	#0]]]
 }
 run_progs
@@ -76,15 +80,16 @@ function run_session() {
 		*)
 			exec nm-applet &
 			exec guake &
-			#exec $SESSION
-			exec $S_KDE
+			exec $SESSION
+			#exec $S_KDE
 			;;
 	esac
 }
 
 SESSION=$DEFAULT_SESSION
-if [ -n $2 ]; then
-	case $2 in
+if [ $# -gt 0 ]; then
+	iSESSION=$*
+	case "${iSESSION:6}" in
 		$S_KDE | "kde")
 			SESSION=$S_KDE
 			;;
@@ -110,6 +115,6 @@ fi
 run_session $SESSION
 
 function clean_up() {
-	calised --stop
+	#calised --stop
 }
 clean_up
