@@ -1,4 +1,9 @@
-﻿set nocompatible
+if (has("win16") || has("win95") || has("win32") || has("win64"))
+    let g:isunix=0
+else
+    let g:isunix=1
+endif
+set nocompatible
 
 "{{{個人信息
 let g:author = 'renyuneyun'
@@ -9,49 +14,33 @@ let g:email  = 'renyuneyun@gmail.com'
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-"Vundle itself
-Plugin 'taglist.vim'
+Plugin 'gmarik/Vundle.vim' "Vundle itself
+Plugin 'taglist.vim' "TagList
+Plugin 'scrooloose/nerdtree' "file browser
 Plugin 'fcitx.vim'
-"Plugin 'c'
-Plugin 'fholgado/minibufexpl.vim'
+Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate'
-Plugin 'Lokaltog/vim-powerline'
-"高級vim狀態欄
+Plugin 'Lokaltog/vim-powerline' "高級vim狀態欄
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
 
-"代碼分析{{{0
-Plugin 'scrooloose/syntastic'
-"0}}}
-"代碼補全{{{0
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
-Plugin 'Valloric/YouCompleteMe'
-"python{{{1
-Plugin 'davidhalter/jedi'
-"1}}}
-"0}}}
+Plugin 'scrooloose/syntastic' "代碼分析
 
-Plugin 'asins/vimcdoc'
-"vim中文幫助文檔
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
+Plugin 'Valloric/YouCompleteMe' "代碼補全
+Plugin 'davidhalter/jedi' "Python用代碼補全（YCM調用）
+Plugin 'asins/vimcdoc' "vim中文幫助文檔
 
 "舊{{{0
 "Plugin acp
 "Plugin c
 "Plugin ctags
 "Plugin echofunc
-"Plugin taglist
 "0}}}
 
 call vundle#end()
 filetype plugin indent on
 "}}}Vundle配置結束
-
-"插件配置{{{
-set laststatus=2
-let g:Powerline_symbols='unicode'
-"}}}
-
 
 "外觀設置（字體，主體）{{{
 set guifont=Monaco\ 13
@@ -78,12 +67,88 @@ set nu
 "}}}顯示設置完
 
 
+"set autoindent
+"set cindent
+
+"CTags & CScope{{{0
+autocmd BufEnter * lcd %:p:h
+map <F10> :call Do_CsTag()<CR>
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
+nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+function Do_CsTag()
+    let dir = getcwd()
+    if filereadable("tags")
+        if (g:isunix == 1)
+            let tagsdeleted = delete("./"."tags")
+        else
+            let tagsdeleted = delete(dir."\\"."tags")
+        endif
+        if (tagsdeleted != 0)
+            echohl WarningMsg | echo "Fail to do tags! Cannot delete the tags" | echohl None
+            return
+        endif
+    endif
+    if has("cscope")
+        silent! execute "cs kill -1"
+    endif
+    if filereadable("cscope.files")
+        if (g:isunix == 1)
+            let csfilesdeleted = delete("./"."cscope.files")
+        else
+            let csfilesdeleted = delete(dir."\\"."cscope.files")
+        endif
+        if (csfilesdeleted != 0)
+            echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.files" | echohl None
+            return
+        endif
+    endif
+    if filereadable("cscope.out")
+        if (g:isunix == 1)
+            let csoutdeleted = delete("./"."cscope.out")
+        else
+            let csoutdeleted = delete(dir."\\"."cscope.out")
+        endif
+        if (csoutdeleted != 0)
+            echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.out" | echohl None
+            return
+        endif
+    endif
+    if (executable('ctags'))
+        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
+        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+    endif
+    if (executable('cscope') && has('cscope'))
+        if (g:isunix == 1)
+            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+        else
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+        endif
+        silent! execute "!cscope -b"
+        execute "normal :"
+        if filereadable("cscope.out")
+            execute "cs add cscope.out"
+        endif
+    endif
+endfunction
+"0}}}
+
+"插件配置{{{
+"powerline{{{1
+set laststatus=2
+let g:Powerline_symbols='unicode'
+"1}}}
+"minibufexpl{{{2
 "用CTRL-TAB遍歷buffer
 noremap <C-TAB>   :MBEbn<CR>
 noremap <C-S-TAB> :MBEbp<CR>
-
-"set autoindent
-"set cindent
+"2}}}
+"}}}
 
 
 "自lilydjwg{{{
