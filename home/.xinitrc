@@ -72,6 +72,7 @@ function run_session() {
 		$S_AWESOME)
 			exec nm-applet &
 			exec guake &
+			exec goldendict &
 			exec $S_AWESOME
 			;;
 		$S_QTILE)
@@ -116,5 +117,6 @@ run_session $SESSION
 
 function clean_up() {
 	#calised --stop
+	continue
 }
 clean_up
