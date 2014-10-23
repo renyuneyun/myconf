@@ -1,7 +1,7 @@
 if (has("win16") || has("win95") || has("win32") || has("win64"))
-    let g:isunix=0
+	let g:isunix=0
 else
-    let g:isunix=1
+	let g:isunix=1
 endif
 set nocompatible
 
@@ -17,7 +17,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim' "Vundle itself
 Plugin 'taglist.vim' "TagList
 Plugin 'scrooloose/nerdtree' "file browser
-Plugin 'fcitx.vim'
 Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate'
 Plugin 'Lokaltog/vim-powerline' "高級vim狀態欄
@@ -25,17 +24,21 @@ Plugin 'Lokaltog/vim-powerline' "高級vim狀態欄
 "Plugin 'xolox/vim-session'
 
 Plugin 'scrooloose/syntastic' "代碼分析
-
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
-Plugin 'Valloric/YouCompleteMe' "代碼補全
-Plugin 'davidhalter/jedi' "Python用代碼補全（YCM調用）
+if v:version > 703 || v:version == 703 && has("patch584") "YCM要求Vim 7.3.584+
+	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
+	Plugin 'Valloric/YouCompleteMe' "代碼補全
+else "不使用YCM的代碼補全
+	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
+endif
+Plugin 'davidhalter/jedi' "Python用代碼補全（由YCM/jedi-vim調用）
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
+Plugin 'fcitx.vim'
 
 "舊{{{0
-"Plugin acp
-"Plugin c
-"Plugin ctags
-"Plugin echofunc
+"Plugin 'acp.vim' "不存在
+"Plugin 'c.vim' "無文件/有問題
+"Plugin 'ctags.vim'
+"Plugin 'echofunc.vim'
 "0}}}
 
 call vundle#end()
@@ -62,8 +65,8 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set listchars=tab:>-,trail:-
-set list
-set nu
+set list "顯示空白
+set nu "行號
 "}}}顯示設置完
 
 
