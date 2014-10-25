@@ -93,16 +93,18 @@ end
 require("menu")
 
 myawesomemenu = {
-    { "manual", terminal .. " -x man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", awesome.quit }
+    { "手冊 (&M)", terminal .. " -x man awesome" },
+    { "修改配置 (&E)", editor_cmd .. " " .. awesome.conffile },
+    { "重載配置 (&R)", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
+    { "註銷 (&L)", awesome.quit }
 }
 
 mymainmenu = awful.menu({ items = { 
-                                    { "app", xdgmenu },
-                                    { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+          { "程序 (&P)", xdgmenu },
+          { "awesome (A)", myawesomemenu, beautiful.awesome_icon },
+          { "終端 (&T)", terminal },
+          { "掛起 (&S)", "systemctl suspend" },
+          { "關機 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-no && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
                                   }
                         })
 
@@ -115,7 +117,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock()
+mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %A ", 1)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -220,9 +222,9 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
 
--- [[[guhua
+-- {{{guhua
 --    awful.key({ modkey }, "l", function () awful.util.spawn("slimlock") end),
--- ]]]
+-- }}}
 
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
