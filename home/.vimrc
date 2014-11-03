@@ -18,8 +18,8 @@ Plugin 'gmarik/Vundle.vim' "Vundle itself
 Plugin 'taglist.vim' "TagList
 Plugin 'scrooloose/nerdtree' "file browser
 Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
-Plugin 'Raimondi/delimitMate'
-Plugin 'Lokaltog/vim-powerline' "高級vim狀態欄
+Plugin 'Raimondi/delimitMate' "括號等自動補全
+Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
 
@@ -142,15 +142,13 @@ endfunction
 "0}}}
 
 "插件配置{{{
-"powerline{{{1
-set laststatus=2
-let g:Powerline_symbols='unicode'
-"1}}}
-"minibufexpl{{{2
+set laststatus=2 "始終顯示狀態行，以顯示vim-airline
+set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
+"minibufexpl{{{
 "用CTRL-TAB遍歷buffer
 noremap <C-TAB>   :MBEbn<CR>
 noremap <C-S-TAB> :MBEbp<CR>
-"2}}}
+"}}}
 "}}}
 
 
