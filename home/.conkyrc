@@ -1,6 +1,6 @@
 use_spacer left
 background no
-update_interval 2.4
+update_interval 2.0
 
 own_window no
 own_window_type normal
@@ -42,7 +42,7 @@ default_outline_color DarkGrey
 alignment top_right
 
 # Gap between borders of screen and text
-gap_x 24
+gap_x 12
 gap_y 24
 
 # Subtract file system buffers from used memory?
@@ -55,11 +55,14 @@ temperature_unit celsius
 top_cpu_separate true
 
 TEXT
-${color #ffcb48}$nodename$color      ${color #828282}$sysname $kernel on $machine$color
-${acpitemp}°C ${color #98c2c7}BAT:$color   ${battery BAT1}   ${battery_time BAT1}
-${color #98c2c7}CPU:$color$cpu% ${color #98c2c7}MEM:$color$memperc% ${color #98c2c7}SWAP:$color$swapperc% ${color #98c2c7}RD:$color$diskio_read ${color #98c2c7}WR:$color$diskio_write
-${color #98c2c7}enp2s0:$color ${color #98c2c7}U:$color ${upspeed enp2s0}/s ${color #98c2c7}D:$color ${downspeed enp2s0}/s
-${color #98c2c7}wlp3s0:$color ${color #98c2c7}U:$color ${upspeed wlp3s0}/s ${color #98c2c7}D:$color ${downspeed wlp3s0}/s
+${color #ffcb48}$nodename$color$alignr${color #828282}$sysname $kernel on $machine$color
+${acpitemp}°C ${color #98c2c7}BAT:$color ${battery BAT1} $alignr${color #489860}${battery_time BAT1}$color
+${color #98c2c7}CPU: $color$cpu% ${color #98c2c7}MEM: $color$memperc% ${color #98c2c7}SWAP: $color$swapperc% ${color #98c2c7}IO: $color${diskio}/s
+${color #89FF00}enp2s0$color ${color #98c2c7}U:$color${upspeed enp2s0}/s ${color #98c2c7}D:$color${downspeed enp2s0}/s ${addr enp2s0}
+${color #89FF00}wlp3s0$color ${color #98c2c7}U:$color${upspeed wlp3s0}/s ${color #98c2c7}D:$color${downspeed wlp3s0}/s ${addr wlp3s0}
+${if_mpd_playing}$stippled_hr
+${font wqy-zenhei}$mpd_smart || LEN: $mpd_length | VOL: $mpd_vol
+$mpd_bar$font$endif
 $stippled_hr
 ${color #FF00FF}CPU$color${color #78af78}${cpugraph 78af78 a3a3a3}$color
 ${color #98c2c7}NAME               PID     CPU%      MEM%$color
@@ -75,14 +78,20 @@ ${color #c4c4c4}${top_mem name 2} ${top_mem pid 2}   ${top_mem cpu 2}    ${top_m
 ${color #a3a3a3}${top_mem name 3} ${top_mem pid 3}   ${top_mem cpu 3}    ${top_mem mem 3}$color
 ${color #828282}${top_mem name 4} ${top_mem pid 4}   ${top_mem cpu 4}    ${top_mem mem 4}$color
 $stippled_hr
-${color #98c2c7}/:$color       ${fs_free_perc /}%  $fs_free  ${color #78af78}${fs_bar 6 /}$color
-${color #98c2c7}/home:$color   ${fs_free_perc /home}%  ${fs_free /home}  ${color #78af78}${fs_bar 6 /home}$color
+${color #FF00FF}DISK$color ${color #98c2c7}Read: $color$diskio_read/s ${color #98c2c7}Write: $color$diskio_write/s
+${color #98c2c7}/:      $color${fs_free /} $fs_size ${color #78af78}${fs_bar 6 /}$color${if_mounted /home}
+${color #98c2c7}/home:  $color${fs_free /home} ${fs_size /home} ${color #78af78}${fs_bar 6 /home}$color$endif ${if_mounted /usr}
+${color #98c2c7}/usr:   $color${fs_free /usr} ${fs_size /usr} ${color #78af78}${fs_bar 6 /usr}$color$endif${if_mounted /var}
+${color #98c2c7}/var:   $color${fs_free /var} ${fs_size /var} ${color #78af78}${fs_bar 6 /var}$color$endif${if_mounted /opt}
+${color #98c2c7}/opt:   $color${fs_free /opt} ${fs_size /opt} ${color #78af78}${fs_bar 6 /opt}$color$endif
 $stippled_hr
 ${color #0077ff}Port(s)${alignr}#Connections
 $color Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}${alignr} ALL: ${tcp_portmon 1 65535 count}
-${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
- ${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
- ${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
-${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
- ${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
- ${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
+#${if_match ${tcp_portmon 1 32767 count} > 0}
+#${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
+# ${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
+# ${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
+#$endif
+#${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
+# ${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
+# ${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
