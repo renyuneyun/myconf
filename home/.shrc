@@ -1,5 +1,8 @@
+export PATH="$PATH:$HOME/bin"
+export EDITOR="vim"
+export QT_GRAPHICSSYSTEM="native"
+
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias cd..='cd ..'
-
 alias vim='env -u PYTHONPATH vim'

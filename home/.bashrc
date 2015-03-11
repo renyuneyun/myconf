@@ -1,8 +1,10 @@
 #
 # ~/.bashrc
 #
-export PATH="$PATH:$HOME/bin"
-export EDITOR="vim"
+
+if [ -f ~/.shrc ]; then
+	source ~/.shrc
+fi
 
 [[ $- != *i* ]] && return
 
@@ -10,10 +12,6 @@ export EDITOR="vim"
 TTY=`tty`
 [[ ($TTY =~ /dev/ttyS?[0-9]*) ]] && export LANG='en_US.UTF-8'
 #1}}}
-
-if [ -f ~/.bash_aliases ]; then
-	source ~/.bash_aliases
-fi
 
 #powerline-shell settings{{{1
 function _update_ps1() {
