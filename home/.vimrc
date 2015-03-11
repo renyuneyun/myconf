@@ -8,6 +8,7 @@ set nocompatible
 "{{{個人信息
 let g:author = 'renyuneyun'
 let g:email  = 'renyuneyun@gmail.com'
+let g:license= 'LGPL V2.1 (See LICENSE)'
 "}}}
 
 "Vundle配置{{{
@@ -25,12 +26,18 @@ Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 
 Plugin 'scrooloose/syntastic' "代碼分析
 if v:version > 703 || v:version == 703 && has("patch584") "YCM要求Vim 7.3.584+
+	let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
 	Plugin 'Valloric/YouCompleteMe' "代碼補全
 else "不使用YCM的代碼補全
+	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 endif
-Plugin 'davidhalter/jedi' "Python用代碼補全（由YCM/jedi-vim調用）
+Plugin 'othree/xml.vim' "XML
+Plugin 'html5.vim' "HTML5 + inline SVG
+Plugin 'ap/vim-css-color' "CSS color shower
+"Plugin 'tpope/vim-surround' "Surrounding functionalities
+
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
 Plugin 'fcitx.vim'
 
@@ -199,6 +206,8 @@ function! InsertPythonComment()
 	normal o
 	call setline('.', '#   Desc    :   ')
 	normal o
+	call setline('.', '#   License :   '.g:license)
+	normal o
 	call setline('.', '#')
 	normal o
 	call cursor(7, 17)
@@ -231,6 +240,8 @@ function! InsertCodeComment()
 	call setline('.', ' *   Date    :   '.strftime("%y/%m/%d %H:%M:%S"))
 	normal o
 	call setline('.', ' *   Desc    :   ')
+	normal o
+	call setline('.', ' *   License :   '.g:license)
 	normal o
 	call setline('.', ' *')
 	normal o
