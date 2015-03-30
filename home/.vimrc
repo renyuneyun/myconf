@@ -257,27 +257,8 @@ endfunc
 au FileType java,cs :%call InsertCodeCommentWhenOpen()
 au FileType c,cpp,java,cs map <F4> :call InsertCodeComment()<cr>
 "3}}}
-"Java{{{4
-function! InsertJavaMainFunction()
-"	exe 'normal'.1.'G'
-"	let line = getline('.')
-"	while line =~ '^/\*+.*$' || line =~ '^\*+/.*$'
-"		normal j
-"		let line = getline('.')
-"	endwhile
-"	查找註釋段。不可用
-	normal Go
-	call setline('.', 'public class '.expand("%:t:r").' {') "不含路徑和擴展名
-	normal o
-	call setline('.', '	public static void main(String[] args) {')
-	normal o
-	call setline('.', '	}')
-	normal o
-	call setline('.', '}')
-	"normal o
-	normal 3k$
-endfunc
-au FileType java : map <F5> :call InsertJavaMainFunction()<cr>
-"4}}}
 "2}}}
 "0}}}
+map <F5> :YcmCompleter GoTo<cr>
+map <F6> :YcmCompleter GoToDefinition<cr>
+map <F7> :YcmCompleter GoToDeclaration<cr>

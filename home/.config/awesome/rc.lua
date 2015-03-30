@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local vicious = require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -83,20 +84,21 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, layouts[1])
 end
 -- }}}
 
 function run_once(cmd)
-  findme = cmd
-  firstspace = cmd:find(" ")
-  if firstspace then
-    findme = cmd:sub(0, firstspace-1)
-  end
-  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+    findme = cmd
+    firstspace = cmd:find(" ")
+    if firstspace then
+      findme = cmd:sub(0, firstspace-1)
+    end
+    awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
 run_once("conky")
+run_once("volumeicon")
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -126,9 +128,40 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
+-- MPD widget {{{
+-- Initialize widget
+mpdwidget = wibox.widget.textbox()
+mpdwidget:buttons(awful.util.table.join(
+    awful.button({ }, 1, function () awful.util.spawn("mpc toggle") end),
+    awful.button({ }, 4, function () awful.util.spawn("mpc volume +5") end),
+    awful.button({ }, 5, function () awful.util.spawn("mpc volume -5") end)
+))
+-- Register widget
+vicious.register(mpdwidget, vicious.widgets.mpd,
+    function (mpdwidget, args)
+        if args["{state}"] == "Stop" then 
+            return " - "
+        else 
+            return args["{Artist}"]..' - '.. args["{Title}"]
+        end
+    end, 10)
+-- }}}
+
+-- {{{ CPU
+-- Initialize widget
+cpuwidget = wibox.widget.textbox()
+-- Register widget
+vicious.register(cpuwidget, vicious.widgets.cpu, " | $1%")
+-- CPU }}}
+
+-- {{{ net
+netwidget = wibox.widget.textbox()
+vicious.register(netwidget, vicious.widgets.net, " | D:${enp2s0 down_kb} | U:${enp2s0 up_kb} ")
+-- net }}}
+
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %A ", 1)
+mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %a ", 1)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -208,6 +241,9 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(mpdwidget)
+    right_layout:add(cpuwidget)
+    right_layout:add(netwidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -320,7 +356,7 @@ clientkeys = awful.util.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = awful.util.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -382,6 +418,8 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { instance = "guake" },
+      properties = { floating = true }},
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -391,9 +429,9 @@ awful.rules.rules = {
     { rule = { class = "Gvim" },
       properties = { floating = true, fullscreen = true}},
     { rule = { class = "Maya" },
-      properties = { floating = true, maximized = true, tag = tags[1][8]}},
+      properties = { maximized = false, tag = tags[1][8]}},
     { rule = { class = "Skype" },
-      properties = { floating = true, tag = tags[1][9]}},
+      properties = { tag = tags[1][9]}},
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
