@@ -98,7 +98,7 @@ function run_once(cmd)
 end
 
 run_once("conky")
-run_once("volumeicon")
+run_once("pasystray")
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu

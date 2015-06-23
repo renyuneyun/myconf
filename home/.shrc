@@ -5,9 +5,12 @@ TTY=`tty`
 
 export PATH="$PATH:$HOME/bin"
 export EDITOR="vim"
-export QT_GRAPHICSSYSTEM="native"
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
+alias grep='grep --color'
+
 alias cd..='cd ..'
+
 alias vim='env -u PYTHONPATH vim'
+alias maya='QT_GRAPHICSSYSTEM="native" sudo -EH maya'
