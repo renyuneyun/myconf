@@ -97,9 +97,6 @@ function run_once(cmd)
     awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("conky")
-run_once("pasystray")
-
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 
@@ -429,9 +426,9 @@ awful.rules.rules = {
     { rule = { class = "Gvim" },
       properties = { floating = true, fullscreen = true}},
     { rule = { class = "Maya" },
-      properties = { maximized = false, tag = tags[1][8]}},
+      properties = { maximized = false, tag = tags[mouse.screen][8]}},
     { rule = { class = "Skype" },
-      properties = { tag = tags[1][9]}},
+      properties = { tag = tags[mouse.screen][9]}},
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },

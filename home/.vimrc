@@ -33,6 +33,7 @@ else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 endif
+Plugin 'TagHighlight'
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
 Plugin 'ap/vim-css-color' "CSS color shower
@@ -40,6 +41,7 @@ Plugin 'ap/vim-css-color' "CSS color shower
 
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
 Plugin 'fcitx.vim'
+Plugin 'bandit.vim'
 
 "舊{{{0
 "Plugin 'acp.vim' "不存在

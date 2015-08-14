@@ -4,11 +4,12 @@ TTY=`tty`
 #1}}}
 
 export PATH="$PATH:$HOME/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
 export EDITOR="vim"
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
-alias grep='grep --color'
+alias grep='grep --color --line-number'
 
 alias cd..='cd ..'
 

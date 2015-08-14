@@ -40,84 +40,68 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-function run_progs() {
-	numlockx &
-	fcitx-autostart &
-	#Now as systemd daemon[[[0
-	#transmission-daemon
-	#exec aria2c &
-	#env -u PYTHONPATH calised &
-	#0]]]
-}
-run_progs
-
 S_KDE="/usr/bin/startkde"
 S_KDE_FAILSAFE="/usr/bin/startkde --failsafe"
 S_GNOME="/usr/bin/gnome-session"
 S_ENLIGHTENMENT="/usr/bin/enlightenment_start"
 S_AWESOME="/usr/bin/awesome"
+S_I3="/usr/bin/i3"
 S_QTILE="/usr/bin/qtile-session"
-DEFAULT_SESSION=$S_AWESOME
+S_DEFAULT=$S_AWESOME
+
+T_DE="de"
+T_WM="wm"
+T_DEFAULT=$T_WM
 
 function run_session() {
-	case $1	in
-		$S_KDE)
-			exec $S_KDE
-			;;
-		$S_KDE_FAILSAFE)
-			exec $S_KDE_FAILSAFE
-			;;
-		$S_GNOME)
-			exec $S_GNOME
-			;;
-		$S_AWESOME)
-			exec nm-applet &
-			exec guake &
-			exec goldendict &
-			exec $S_AWESOME
-			;;
-		$S_QTILE)
-			exec $S_QTILE
-			;;
-		*)
-			exec nm-applet &
-			exec guake &
-			exec $SESSION
-			#exec $S_KDE
+	case $TYPE in
+		$T_WM)
+			nm-applet &
+			guake &
+			goldendict &
+			conky &
+			pasystray &
+			xautolock -detectsleep -time 30 -locker 'systemctl suspend' &
 			;;
 	esac
+	numlockx &
+	fcitx-autostart &
+	exec $SESSION
 }
 
-SESSION=$DEFAULT_SESSION
+SESSION=$S_DEFAULT
+TYPE=$T_DEFAULT
 if [ $# -gt 0 ]; then
 	iSESSION=$*
 	case "${iSESSION:6}" in
-		$S_KDE | "kde")
+		$S_KDE|"kde")
 			SESSION=$S_KDE
+			TYPE=$T_DE
 			;;
 		$S_KDE_FAILSAFE|"kde failsafe")
 			SESSION=$S_KDE_FAILSAFE
+			TYPE=$T_DE
 			;;
 		$GNOME|"gnome")
 			SESSION=$S_GNOME
+			TYPE=$T_DE
 			;;
 		$S_AWESOME|"awesome")
 			SESSION=$S_AWESOME
+			TYPE=$T_WM
+			;;
+		$S_ENLIGHTENMENT|"enlightenment")
+			SESSION=$S_ENLIGHTENMENT
+			TYPE=$T_DE
+			;;
+		$S_I3|"i3")
+			SESSION=$S_I3
+			TYPE=$T_WM
 			;;
 		$S_QTILE|"qtile")
 			SESSION=$S_QTILE
-			;;
-		*)
-			SESSION=$DEFAULT_SESSION
+			TYPE=$T_WM
 			;;
 	esac
-else
-	SESSION=$DEFAULT_SESSION
 fi
-run_session $SESSION
-
-function clean_up() {
-	#calised --stop
-	continue
-}
-clean_up
+run_session $TYPE
