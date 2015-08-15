@@ -1,0 +1,24 @@
+##
+## Arch Linux Chinese EDU repository mirrorlist
+##
+
+## China
+Server = http://mirrors.6.tuna.tsinghua.edu.cn/archlinux/$repo/os/${arch}
+Server = http://[2001:da8:d800:95::110]/archlinux/$repo/os/${arch} #ustc
+Server = http://mirror.4.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+Server = http://mirror.lzu.edu.cn/archlinux/$repo/os/$arch
+#Server = http://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch
+#Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+#Server = http://mirrors.163.com/archlinux/$repo/os/$arch
+#Server = http://mirrors.hust.edu.cn/archlinux/$repo/os/$arch
+#Server = http://mirrors.hustunique.com/archlinux/$repo/os/$arch
+##Server = http://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch
+##Server = http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch
+##Server = http://mirrors.skyshe.cn/archlinux/$repo/os/$arch
+
+#Server = http://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch
+#Server = http://mirrors.opencas.cn/archlinux/$repo/os/$arch
+
+#@蘭州大學
+#Server = http://[2001:da8:c000::160]/archlinux/$repo/os/$arch
+

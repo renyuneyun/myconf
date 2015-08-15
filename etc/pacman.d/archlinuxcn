@@ -1,0 +1,9 @@
+Server = http://repo.archlinuxcn.org/$arch
+#Server = http://[2001:470:c:8b0::2]/repo/$arch/
+Server = http://[2001:da8:d800:95::110]/archlinuxcn/$arch
+Server = http://mirrors.6.tuna.tsinghua.edu.cn/$repo/$arch
+#Server = http://202.117.179.120:14849/$repo/$arch
+Server = http://mirrors.tuna.tsinghua.edu.cn/$repo/$arch
+#Server = http://mirrors.ustc.edu.cn/archlinuxcn/$arch
+#Server = http://mirrors.4.tuna.tsinghua.edu.cn/$repo/$arch
+
