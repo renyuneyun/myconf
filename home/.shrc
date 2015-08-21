@@ -1,6 +1,6 @@
 #set en locale for tty {{{1
 TTY=`tty`
-[[ ($TTY =~ /dev/ttyS?[0-9]*) ]] && export LANG='en_US.UTF-8'
+[[ ($TTY =~ /dev/ttyS?[0-9]*) ]] && export LANG='en_US.UTF-8' || export LANG='zh_CN.UTF-8'
 #1}}}
 
 export PATH="$PATH:$HOME/bin"
@@ -9,9 +9,8 @@ export EDITOR="vim"
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
-alias grep='grep --color --line-number'
+alias grep='grep --color'
 
 alias cd..='cd ..'
 
 alias vim='env -u PYTHONPATH vim'
-alias maya='QT_GRAPHICSSYSTEM="native" sudo -EH maya'

@@ -12,6 +12,9 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
+export PATH="$PATH:$HOME/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
+
 #export OXYGEN_DISABLE_INNER_SHADOWS_HACK=1 #A hack for monodevelop
 
 userresources=$HOME/.Xresources
