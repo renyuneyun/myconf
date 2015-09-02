@@ -55,7 +55,7 @@ filetype plugin indent on
 "}}}Vundle配置結束
 
 "外觀設置（字體，主體）{{{
-set guifont=Monaco\ 13
+set guifont=Monaco\ 16
 colorscheme evening
 "}}}外觀設置完
 
@@ -178,9 +178,9 @@ syntax enable
 filetype plugin indent on
 "1}}}
 "Python{{{2
-":autocmd FileType python : set foldmethod=syntax
+:autocmd FileType python : set foldmethod=indent
 ":autocmd FileType python :set smartindent 
-":autocmd FileType python :set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+:autocmd FileType python :set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 "2}}}
 "0}}}
 

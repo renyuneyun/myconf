@@ -8,7 +8,7 @@ own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 use_xft yes
-xftfont Monaco-12
+xftfont Monaco-15
 xftalpha 0.8
 
 mail_spool $MAIL
@@ -56,7 +56,7 @@ top_cpu_separate true
 
 TEXT
 ${color #ffcb48}$nodename$color$alignr${color #828282}$sysname $kernel on $machine$color
-${acpitemp}°C ${color #0073F2}${loadavg}$color ${color #98c2c7}BAT:$color ${battery BAT1} $alignr${color #489860}${battery_time BAT1}$color
+${acpitemp}°C ${color #0073F2}${loadavg}$color ${color #98c2c7}BAT:$color ${battery BAT0} $alignr${color #489860}${battery_time BAT0}$color
 ${color #98c2c7}CPU: $color$cpu% ${color #98c2c7}MEM: $color$memperc% ${color #98c2c7}SWAP: $color$swapperc% ${color #98c2c7}IO: $color${diskio}/s
 ${color #89FF00}enp2s0$color ${color #98c2c7}U:$color${upspeed enp2s0}/s ${color #98c2c7}D:$color${downspeed enp2s0}/s ${addr enp2s0}
 ${color #89FF00}wlp3s0$color ${color #98c2c7}U:$color${upspeed wlp3s0}/s ${color #98c2c7}D:$color${downspeed wlp3s0}/s ${addr wlp3s0}
