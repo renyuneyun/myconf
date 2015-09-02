@@ -1,0 +1,16 @@
+patch:
+#  "translator/dictionary": luna_pinyin.extended
+#  "translator/dictionary": han
+  reverse_lookup:
+    dictionary: cangjie5
+    enable_completion: true
+    preedit_format:
+      - xform/^([a-z]*)$/$1｜\U$1\E/
+      - "xlit|ABCDEFGHIJKLMNOPQRSTUVWXYZ|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+    comment_format:
+      - "xform/^(.*)$/：$1/"
+    prefix: "`"
+    suffix: "'"
+    tips: "〔倉頡〕"
+  "recognizer/patterns/punct": "^/[a-z]*$"
+  "punctuator/import_preset": symbols
