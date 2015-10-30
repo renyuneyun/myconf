@@ -67,9 +67,16 @@ set termencoding=utf-8
 set fileformats=unix
 "}}}完
 
+"跳轉到上次位置{{{
+if has("autocmd")
+ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+"}}}
+
 "顯示設置{{{
-set cursorline
-"set cursorcolumn
+set colorcolumn=80 "80列豎線
+set cursorline "高亮當前行
+set cursorcolumn "高亮當前列
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
