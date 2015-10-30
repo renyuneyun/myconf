@@ -39,7 +39,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/usr/share/awesome/themes/using/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -153,7 +153,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu, " | $1%")
 
 -- {{{ net
 netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, " | D:${enp2s0 down_kb} | U:${enp2s0 up_kb} ")
+vicious.register(netwidget, vicious.widgets.net, " | D:${wlp2s0 down_kb} | U:${wlp2s0 up_kb} ")
 -- net }}}
 
 -- {{{ Wibox
