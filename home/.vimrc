@@ -8,7 +8,7 @@ set nocompatible
 "{{{個人信息
 let g:author = 'renyuneyun'
 let g:email  = 'renyuneyun@gmail.com'
-let g:license= 'LGPL V2.1 (See LICENSE)'
+let g:license= 'Apache 2.0 (See LICENSE)'
 "}}}
 
 "Vundle配置{{{
@@ -20,14 +20,21 @@ Plugin 'taglist.vim' "TagList
 Plugin 'scrooloose/nerdtree' "file browser
 Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate' "括號等自動補全
+Plugin 'tpope/vim-surround' "編輯環繞符號
 Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
 
+let g:syntastic_python_checkers=['pylint']
+"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
+let g:syntastic_error_symbol = '>>'
+let g:syntastic_warning_symbol = '>'
 Plugin 'scrooloose/syntastic' "代碼分析
 if v:version > 703 || v:version == 703 && has("patch584") "YCM要求Vim 7.3.584+
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
+	let g:ycm_seed_identifiers_with_syntax = 1
+	let g:ycm_extra_conf_globlist = ['~/coding/*']
 	Plugin 'Valloric/YouCompleteMe' "代碼補全
 else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
@@ -271,3 +278,4 @@ au FileType c,cpp,java,cs map <F4> :call InsertCodeComment()<cr>
 map <F5> :YcmCompleter GoTo<cr>
 map <F6> :YcmCompleter GoToDefinition<cr>
 map <F7> :YcmCompleter GoToDeclaration<cr>
+map <F8> :YcmCompleter GetParent<cr>
