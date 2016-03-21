@@ -10,6 +10,7 @@ zstyle :compinstall filename '/home/guhua/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
 if [ -f ~/.shrc ]; then
 	source ~/.shrc
 fi
@@ -20,6 +21,8 @@ fi
 
 # powerline {{{
 TTY=`tty`
-plscript='/usr/share/zsh/site-contrib/powerline.zsh'
-[ -z "$TMUX" ] && [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
+plscript='/usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh'
+[[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
+
+eval $(thefuck --alias)
