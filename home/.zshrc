@@ -1,3 +1,6 @@
+if [ -f /etc/zsh/zprofile ]; then
+	source /etc/zsh/zprofile
+fi
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
