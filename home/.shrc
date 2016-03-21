@@ -6,6 +6,7 @@ TTY=`tty`
 export PATH="$PATH:$HOME/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
 export EDITOR="vim"
+export GOPATH="$HOME/coding/go"
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
