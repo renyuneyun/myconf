@@ -10,6 +10,8 @@ zstyle :compinstall filename '/home/guhua/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+#擴展路徑
+setopt complete_in_word
 
 if [ -f ~/.shrc ]; then
 	source ~/.shrc
