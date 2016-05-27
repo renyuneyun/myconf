@@ -8,6 +8,9 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
 export EDITOR="vim"
 export GOPATH="$HOME/coding/go"
 
+export UNZIP="-O CP936"
+export ZIPINFO="-O CP936"
+
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias grep='grep --color'

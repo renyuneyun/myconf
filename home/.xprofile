@@ -1,8 +1,12 @@
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
+export LANGUAGE="zh_CN.UTF-8:zh_TW:en_US"
 
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
 export SAL_USE_VCLPLUGIN=gtk
+
+export UNZIP="-O CP936"
+export ZIPINFO="-O CP936"

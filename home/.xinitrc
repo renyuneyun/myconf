@@ -4,18 +4,10 @@ LOG=/tmp/startx.log
 echo $# > $LOG
 echo $* >> $LOG
 
-export LANG=zh_CN.UTF-8
-export LC_ALL=zh_CN.UTF-8
-export LANGUAGE="zh_CN.UTF-8:zh_CN.GB18030:zh_TW:en_US"
-
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
+source "$HOME/.xprofile"
 
 export PATH="$PATH:$HOME/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
-
-#export OXYGEN_DISABLE_INNER_SHADOWS_HACK=1 #A hack for monodevelop
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
