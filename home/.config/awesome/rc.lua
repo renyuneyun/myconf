@@ -58,9 +58,9 @@ local layouts =
 {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
@@ -84,7 +84,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, layouts[1])
+    tags[s] = awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, layouts[2])
 end
 -- }}}
 
@@ -96,6 +96,15 @@ function run_once(cmd)
     end
     awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
+
+run_once("fcitx-autostart")
+run_once("goldendict")
+run_once("pasystray")
+run_once("nm-applet")
+run_once("guake")
+run_once("conky")
+run_once("xautolock -detectsleep -time 30 -locker 'systemctl suspend'")
+run_once("numlockx")
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
