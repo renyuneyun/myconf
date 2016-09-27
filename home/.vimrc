@@ -20,18 +20,22 @@ Plugin 'taglist.vim' "TagList
 Plugin 'scrooloose/nerdtree' "file browser
 Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate' "括號等自動補全
+au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
 Plugin 'tpope/vim-surround' "編輯環繞符號
 Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
 
-let g:syntastic_python_checkers=['pylint']
+"let g:syntastic_python_checkers=['pylint']
 "let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
 let g:syntastic_error_symbol = '>>'
 let g:syntastic_warning_symbol = '>'
 Plugin 'scrooloose/syntastic' "代碼分析
+if v:version >= 703
+	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
+endif
 if v:version > 703 || v:version == 703 && has("patch584") "YCM要求Vim 7.3.584+
-	let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
+	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax = 1
 	let g:ycm_extra_conf_globlist = ['~/coding/*']
@@ -40,6 +44,7 @@ else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 endif
+Plugin 'fatih/vim-go'
 Plugin 'TagHighlight'
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
@@ -167,11 +172,17 @@ endfunction
 "插件配置{{{
 set laststatus=2 "始終顯示狀態行，以顯示vim-airline
 set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
-"minibufexpl{{{
+	"minibufexpl{{{
 "用CTRL-TAB遍歷buffer
 noremap <C-TAB>   :MBEbn<CR>
 noremap <C-S-TAB> :MBEbp<CR>
-"}}}
+	"}}}
+	"YouCompleteMe {{{
+map <F5> :YcmCompleter GoTo<cr>
+map <F6> :YcmCompleter GoToDefinition<cr>
+map <F7> :YcmCompleter GoToDeclaration<cr>
+map <F8> :YcmCompleter GetParent<cr>
+	"}}}
 "}}}
 
 
@@ -220,13 +231,16 @@ function! InsertPythonComment()
 	normal o
 	call setline('.', '#   Date    :   '.strftime("%y/%m/%d %H:%M:%S"))
 	normal o
-	call setline('.', '#   Desc    :   ')
-	normal o
 	call setline('.', '#   License :   '.g:license)
 	normal o
 	call setline('.', '#')
 	normal o
-	call cursor(7, 17)
+	normal o
+	call setline('.', "'''")
+	normal o
+	normal o
+	call setline('.', "'''")
+	call cursor(11, 0)
 endfunction
 function! InsertPythonCommentWhenOpen()
 	if a:lastline == 1 && !getline('.')
@@ -275,7 +289,11 @@ au FileType c,cpp,java,cs map <F4> :call InsertCodeComment()<cr>
 "3}}}
 "2}}}
 "0}}}
-map <F5> :YcmCompleter GoTo<cr>
-map <F6> :YcmCompleter GoToDefinition<cr>
-map <F7> :YcmCompleter GoToDeclaration<cr>
-map <F8> :YcmCompleter GetParent<cr>
+
+" 修改變量名 自http://stackoverflow.com/questions/597687/changing-variable-names-in-vim {{{
+" For local replace
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
+
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>}
+" }}}
