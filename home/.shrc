@@ -6,6 +6,9 @@ TTY=`tty`
 export PATH="$PATH:$HOME/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
 export EDITOR="vim"
+
+export PYTHONPATH="$HOME/lib/python"
+
 export GOPATH="$HOME/coding/go"
 
 export UNZIP="-O CP936"
@@ -18,3 +21,8 @@ alias grep='grep --color'
 alias cd..='cd ..'
 
 alias vim='env -u PYTHONPATH vim'
+
+alias pcss='proxychains -f ~/.proxychains/proxychains.ss.conf'
+
+alias ns_wlan='sudo systemctl restart netctl-auto@wlp2s0.service'
+alias ns_rj='sudo systemctl restart rjsupplicant.service'
