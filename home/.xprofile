@@ -10,3 +10,7 @@ export SAL_USE_VCLPLUGIN=gtk
 
 export UNZIP="-O CP936"
 export ZIPINFO="-O CP936"
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
+xrdb -merge ~/.Xresources
