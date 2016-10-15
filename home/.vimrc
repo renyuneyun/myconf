@@ -34,7 +34,7 @@ Plugin 'scrooloose/syntastic' "代碼分析
 if v:version >= 703
 	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
 endif
-if v:version > 703 || v:version == 703 && has("patch584") && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
+if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax = 1
