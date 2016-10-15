@@ -34,7 +34,7 @@ Plugin 'scrooloose/syntastic' "代碼分析
 if v:version >= 703
 	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
 endif
-if v:version > 703 || v:version == 703 && has("patch584") "YCM要求Vim 7.3.584+
+if v:version > 703 || v:version == 703 && has("patch584") && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax = 1
@@ -52,8 +52,10 @@ Plugin 'ap/vim-css-color' "CSS color shower
 "Plugin 'tpope/vim-surround' "Surrounding functionalities
 
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
-Plugin 'fcitx.vim'
-Plugin 'bandit.vim'
+if executable("fcitx")
+	Plugin 'fcitx.vim'
+endif
+"Plugin 'bandit.vim'
 
 "舊{{{0
 "Plugin 'acp.vim' "不存在
@@ -295,5 +297,5 @@ au FileType c,cpp,java,cs map <F4> :call InsertCodeComment()<cr>
 nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
 
 " For global replace
-nnoremap gR gD:%s/<C-R>///gc<left><left><left>}
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 " }}}
