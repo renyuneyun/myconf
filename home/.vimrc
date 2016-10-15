@@ -16,7 +16,11 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim' "Vundle itself
-Plugin 'taglist.vim' "TagList
+if executable("ctags")
+	Plugin 'taglist.vim' "TagList
+	Plugin 'TagHighlight'
+	"Plugin 'bandit.vim'
+endif
 Plugin 'scrooloose/nerdtree' "file browser
 Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate' "括號等自動補全
@@ -43,19 +47,17 @@ if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake
 else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
+	let g:jedi#force_py_version = 3
 endif
 Plugin 'fatih/vim-go'
-Plugin 'TagHighlight'
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
 Plugin 'ap/vim-css-color' "CSS color shower
-"Plugin 'tpope/vim-surround' "Surrounding functionalities
 
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
 if executable("fcitx")
 	Plugin 'fcitx.vim'
 endif
-"Plugin 'bandit.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -90,6 +92,7 @@ set shiftwidth=4
 set listchars=tab:>-,trail:-
 set list "顯示空白
 set nu "行號
+set foldlevelstart=2
 "}}}顯示設置完
 
 
