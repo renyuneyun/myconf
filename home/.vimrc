@@ -57,19 +57,12 @@ if executable("fcitx")
 endif
 "Plugin 'bandit.vim'
 
-"舊{{{0
-"Plugin 'acp.vim' "不存在
-"Plugin 'c.vim' "無文件/有問題
-"Plugin 'ctags.vim'
-"Plugin 'echofunc.vim'
-"0}}}
-
 call vundle#end()
 filetype plugin indent on
 "}}}Vundle配置結束
 
 "外觀設置（字體，主體）{{{
-set guifont=Monaco\ 16
+set guifont=Monaco\ 16,DejaVu\ Sans\ Mono\ 16
 colorscheme evening
 "}}}外觀設置完
 
