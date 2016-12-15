@@ -17,7 +17,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim' "Vundle itself
 if executable("ctags")
-	Plugin 'taglist.vim' "TagList
+	"Plugin 'taglist.vim' "TagList
+	Plugin 'majutsushi/tagbar'
 	Plugin 'TagHighlight'
 	"Plugin 'bandit.vim'
 endif
@@ -49,7 +50,38 @@ else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 	let g:jedi#force_py_version = 3
 endif
-Plugin 'fatih/vim-go'
+if executable("go")
+	Plugin 'fatih/vim-go'
+	if executable("gotags")
+		let g:tagbar_type_go = {
+					\ 'ctagstype' : 'go',
+					\ 'kinds'     : [
+					\ 'p:package',
+					\ 'i:imports:1',
+					\ 'c:constants',
+					\ 'v:variables',
+					\ 't:types',
+					\ 'n:interfaces',
+					\ 'w:fields',
+					\ 'e:embedded',
+					\ 'm:methods',
+					\ 'r:constructor',
+					\ 'f:functions'
+					\ ],
+					\ 'sro' : '.',
+					\ 'kind2scope' : {
+					\ 't' : 'ctype',
+					\ 'n' : 'ntype'
+					\ },
+					\ 'scope2kind' : {
+					\ 'ctype' : 't',
+					\ 'ntype' : 'n'
+					\ },
+					\ 'ctagsbin'  : 'gotags',
+					\ 'ctagsargs' : '-sort -silent'
+					\ }
+	endif
+endif
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
 Plugin 'ap/vim-css-color' "CSS color shower
@@ -294,4 +326,9 @@ nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
 
 " For global replace
 nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+" }}}
+
+" Golang {{{
+au FileType go map <F9> :GoBuild<cr>
+au FileType go map <S-F9> :GoRun<cr>
 " }}}
