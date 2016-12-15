@@ -8,7 +8,7 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/guhua/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -30,4 +30,5 @@ plscript='/usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh'
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
 
-eval $(thefuck --alias)
+hash thefuck &>/dev/null && eval $(thefuck --alias)
+

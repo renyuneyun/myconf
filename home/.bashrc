@@ -9,11 +9,14 @@ fi
 [[ $- != *i* ]] && return
 
 #powerline-shell settings{{{1
-function _update_ps1() {
-	export PS1="$(python2 ~/git/net/powerline-shell/powerline-shell.py --colorize-hostname $? 2> /dev/null)"
-}
-export PROMPT_COMMAND=""
-TTY=`tty`
-[ -z "$TMUX" ] && [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+excf="~/git/net/powerline-shell/powerline-shell.py"
+if [ -e $excf ]; then
+	function _update_ps1() {
+		export PS1="$(python2 $excf --colorize-hostname $? 2> /dev/null)"
+	}
+	export PROMPT_COMMAND=""
+	TTY=`tty`
+	[ -z "$TMUX" ] && [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $excf ]; then export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"; fi
+fi
 #1}}}
 
