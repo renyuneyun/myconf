@@ -79,7 +79,8 @@ function setup_left_panel(count)
         top_layout:add(mytaglist[s])
 
         local bottom_layout = wibox.layout.fixed.vertical()
-        if s == 1 then bottom_layout:add(isystray) end
+        --if s == 1 then bottom_layout:add(isystray) end
+        bottom_layout:add(isystray)
 
         layout:set_top(top_layout)
         layout:set_bottom(bottom_layout)

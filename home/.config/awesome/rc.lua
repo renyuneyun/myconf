@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
+require('freedesktop.utils')
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -45,6 +46,9 @@ beautiful.init(awful.util.getdir("config") .. "/theme/theme.lua")
 terminal = "terminator"
 editor = os.getenv("EDITOR") or "gvim"
 editor_cmd = terminal .. " -x " .. editor
+
+freedesktop.utils.terminal = terminal  -- default: "xterm"
+freedesktop.utils.icon_theme = 'breeze' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -84,7 +88,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, layouts[2])
+    tags[s] = awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, layouts[3])
 end
 -- }}}
 
@@ -98,6 +102,7 @@ function run_once(cmd)
 end
 
 run_once("fcitx-autostart")
+run_once("klipper")
 run_once("goldendict")
 run_once("pasystray")
 run_once("nm-applet")
@@ -109,7 +114,9 @@ run_once("numlockx")
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 
-require("menu")
+require('freedesktop.menu')
+
+free_desktop_menu_items = freedesktop.menu.new()
 
 myawesomemenu = {
     { "手冊 (&M)", terminal .. " -x man awesome" },
@@ -119,8 +126,8 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { 
-          { "程序 (&P)", xdgmenu },
-          { "awesome (A)", myawesomemenu, beautiful.awesome_icon },
+          { "程序 (&P)", free_desktop_menu_items },
+          { "awesome (&A)", myawesomemenu, beautiful.awesome_icon },
           { "終端 (&T)", terminal },
           { "掛起 (&S)", "systemctl suspend" },
           { "關機 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-cancel --timeout 30 && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
@@ -267,6 +274,20 @@ globalkeys = awful.util.table.join(
 
 -- {{{guhua
 --    awful.key({ modkey }, "l", function () awful.util.spawn("slimlock") end),
+    -- Brightness
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.util.spawn("xbacklight -dec 15") end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        awful.util.spawn("xbacklight -inc 15") end),
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+        awful.util.spawn("pamixer --decrease 5") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+        awful.util.spawn("pamixer --increase 5") end),
+    awful.key({ }, "XF86AudioMute", function ()
+        awful.util.spawn("pactl set-sink-mute 0 toggle") end),
+    -- screenshot
+    awful.key({}, "Print", function()
+        awful.util.spawn_with_shell("scrot -e 'mv $f ~/Image/ScreenShot'") end),
 -- }}}
 
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
@@ -334,7 +355,15 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey, "Control" }, "o", awful.client.movetoscreen),
+    awful.key({ modkey, "Control", "Shift" }, "j",
+        function (c)
+            awful.client.movetoscreen(c,c.screen+1)
+        end),
+    awful.key({ modkey, "Control", "Shift" }, "k",
+        function (c)
+            awful.client.movetoscreen(c,c.screen-1)
+        end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -428,6 +457,8 @@ awful.rules.rules = {
       properties = { maximized = false, tag = tags[mouse.screen][8]}},
     { rule = { class = "Skype" },
       properties = { tag = tags[mouse.screen][9]}},
+    { rule = { class = "Wire" },
+      properties = { tag = tags[mouse.screen][10]}},
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
