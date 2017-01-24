@@ -1,6 +1,5 @@
 patch:
-#  "translator/dictionary": luna_pinyin.extended
-#  "translator/dictionary": han
+  "translator/dictionary": luna_pinyin.extended
   reverse_lookup:
     dictionary: cangjie5
     enable_completion: true
