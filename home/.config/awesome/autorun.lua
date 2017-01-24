@@ -18,4 +18,5 @@ run_once("guake")
 run_once("conky")
 run_once("xautolock -detectsleep -time 30 -locker 'systemctl suspend'")
 run_once("numlockx")
+run_once("powerline-daemon")
 
