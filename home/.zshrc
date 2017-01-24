@@ -26,7 +26,7 @@ fi
 
 # powerline {{{
 TTY=`tty`
-plscript='/usr/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh'
+plscript='/usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh'
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
 

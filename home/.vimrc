@@ -85,6 +85,8 @@ endif
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
 Plugin 'ap/vim-css-color' "CSS color shower
+Plugin 'StanAngeloff/php.vim'
+Plugin 'pangloss/vim-javascript'
 
 Plugin 'asins/vimcdoc' "vim中文幫助文檔
 if executable("fcitx")
