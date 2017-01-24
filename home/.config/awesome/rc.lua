@@ -11,6 +11,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 require('freedesktop.utils')
+require("autorun")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -91,25 +93,6 @@ local function client_menu_toggle_fn()
     end
 end
 -- }}}
-
-function run_once(cmd)
-    findme = cmd
-    firstspace = cmd:find(" ")
-    if firstspace then
-      findme = cmd:sub(0, firstspace-1)
-    end
-    awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
-end
-
-run_once("fcitx-autostart")
-run_once("klipper")
-run_once("goldendict")
-run_once("pasystray")
-run_once("nm-applet")
-run_once("guake")
-run_once("conky")
-run_once("xautolock -detectsleep -time 30 -locker 'systemctl suspend'")
-run_once("numlockx")
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
