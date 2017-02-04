@@ -1,7 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local common = require("awful.widget.common")
-local vicious = require("vicious")
+require("widgets")
 
 local function vert_list_update(w, buttons, label, data, objects)
     -- update the widgets, creating them if needed
@@ -54,44 +54,6 @@ local function vert_list_update(w, buttons, label, data, objects)
     end
 end
 
--- MPD widget {{{
--- Initialize widget
-mpdwidget = wibox.widget.textbox()
-mpdwidget:buttons(awful.util.table.join(
-awful.button({ }, 1, function () awful.util.spawn("mpc toggle") end),
-awful.button({ }, 4, function () awful.util.spawn("mpc volume +5") end),
-awful.button({ }, 5, function () awful.util.spawn("mpc volume -5") end)
-))
--- Register widget
-vicious.register(mpdwidget, vicious.widgets.mpd,
-function (mpdwidget, args)
-    if args["{state}"] == "Stop" then 
-        return " - "
-    else 
-        return args["{Artist}"]..' - '.. args["{Title}"]
-    end
-end, 10)
--- }}}
-
--- {{{ CPU
--- Initialize widget
-cpuwidget = wibox.widget.textbox()
--- Register widget
-vicious.register(cpuwidget, vicious.widgets.cpu, " | $1%")
--- CPU }}}
-
--- {{{ net
-netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, " | D:${wlp2s0 down_kb} | U:${wlp2s0 up_kb} ")
--- net }}}
-
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
--- Create a textclock widget
---mytextclock = wibox.widget.textclock()
-mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %a ", 1)
-
 function setup_panels(taglist_buttons, tasklist_buttons)
     setup_top_panel(tasklist_buttons)
     setup_left_panel(taglist_buttons)
@@ -114,7 +76,7 @@ function setup_top_panel(tasklist_buttons)
         s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
         -- Create the wibox
-        s.mywibox = awful.wibar({ position = "top", screen = s })
+        s.mywibox = awful.wibar({ position = "top", screen = s, height=26 })
 
         -- Add widgets to the wibox
         s.mywibox:setup {
@@ -128,8 +90,13 @@ function setup_top_panel(tasklist_buttons)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 mpdwidget,
-                cpuwidget,
-                netwidget,
+                arrl_ld,
+                rvbg(fswidget),
+                arrl_dl,
+                batwidget,
+                arrl_ld,
+                rvbg(netwidget),
+                arrl_dl,
                 mykeyboardlayout,
                 mytextclock,
                 s.mylayoutbox,
@@ -159,6 +126,8 @@ function setup_left_panel(taglist_buttons)
             },
             { -- Bottom widgets
                 layout = wibox.layout.fixed.vertical,
+                memwidget,
+                cpuwidget,
                 isystray,
             },
         }

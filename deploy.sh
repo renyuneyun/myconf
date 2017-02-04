@@ -30,7 +30,10 @@ if [ -z $1 ]; then
 else
 	homedir=$1
 fi
-dealdir home $homedir;
+
 git submodule init
-git submodule update
+git submodule update &
+dealdir home $homedir;
+
+wait
 
