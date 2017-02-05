@@ -8,6 +8,24 @@ function rvbg(mywidget)
     return wibox.container.background(mywidget, theme.bg_focus)
 end
 
+local function hex_proportion(hexstr, percent)
+    local num = tonumber(hexstr, 16)
+    num = math.floor(num + (255 - num) * percent)
+    return num
+end
+
+local function pp_rgb(color, percent)
+    -- Higher percent value is, deeper the color is
+    if type(percent) ~= "number" then percent = tonumber(percent) end
+    if percent > 100 then percent = 100 end
+    if percent > 1 then percent = percent / 100 end
+    if percent < 0 then percent = 0 end
+    local r = hex_proportion(color:sub(2,3), percent)
+    local g = math.floor(tonumber(color:sub(4,5), 16) * (1-percent))
+    local b = math.floor(tonumber(color:sub(6,7), 16) * (1-percent))
+    return string.format("#%X%X%X", r, g, b)
+end
+
 local markup = lain.util.markup
 
 local separators = lain.util.separators
@@ -120,7 +138,8 @@ theme.fs = lain.widgets.fs({
     options  = "--exclude-type=tmpfs",
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
     settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. fs_now.used .. "% "))
+        local color = pp_rgb(theme.fg_normal, 100-fs_now.used)
+        widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, fs_now.used)))
     end
 })
 fswidget = wibox.widget {
@@ -145,7 +164,8 @@ local bat = lain.widgets.bat({
             else
                 baticon:set_image(theme.widget_battery)
             end
-            widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
+            local color = pp_rgb(theme.fg_normal, 100-bat_now.perc)
+            widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, bat_now.perc)))
         else
             widget:set_markup(markup.font(theme.font, " AC "))
             baticon:set_image(theme.widget_ac)
