@@ -165,7 +165,7 @@ local bat = lain.widgets.bat({
                 baticon:set_image(theme.widget_battery)
             end
             local color = pp_rgb(theme.fg_normal, 100-bat_now.perc)
-            widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, bat_now.perc)))
+            widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% <span color=\"#2976F2\">餘</span>%s ", color, bat_now.perc, bat_now.time)))
         else
             widget:set_markup(markup.font(theme.font, " AC "))
             baticon:set_image(theme.widget_ac)
