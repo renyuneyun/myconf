@@ -435,7 +435,7 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+      }
     },
 
     -- Floating clients.
@@ -457,7 +457,7 @@ awful.rules.rules = {
           ,"Gvim"
           ,"Skype"
           ,"Wire"
-      },
+        },
 
         name = {
           "Event Tester",  -- xev.
@@ -466,7 +466,8 @@ awful.rules.rules = {
           "AlarmWindow",  -- Thunderbird's calendar.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      }, properties = { floating = true }},
+      }, properties = { floating = true }
+    },
 
     -- Add titlebars to normal clients and dialogs
     --{ rule_any = {type = { "normal", "dialog" }
@@ -479,6 +480,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "Wire" },
+      properties = { tag = awful.screen.focused().tags[-1] } },
 }
 -- }}}
 
