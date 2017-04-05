@@ -27,6 +27,32 @@ Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate' "括號等自動補全
 au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
 Plugin 'tpope/vim-surround' "編輯環繞符號
+"Rainbow Parentheses
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+			\   'guifgs': ['white', 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+			\   'ctermfgs': ['white', 'blue', 'yellow', 'cyan', 'magenta', 'red', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+			\   'operators': '_,_',
+			\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+			\   'separately': {
+			\       '*': {},
+			\       'tex': {
+			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+			\       },
+			\       'lisp': {
+			\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+			\       },
+			\       'vim': {
+			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+			\       },
+			\       'html': {
+			\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+			\       },
+			\       'css': 0,
+			\   }
+			\}
+Plugin 'jaxbot/semantic-highlight.vim'
 Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
