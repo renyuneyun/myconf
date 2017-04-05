@@ -13,6 +13,7 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+zstyle ':completion:*' menu select #選擇自動補全項目
 #擴展路徑
 setopt complete_in_word
 
