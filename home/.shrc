@@ -26,3 +26,6 @@ alias pcss='proxychains -f ~/.proxychains/proxychains.ss.conf'
 
 alias ns_wlan='sudo systemctl restart netctl-auto@wlp2s0.service'
 alias ns_rj='sudo systemctl restart rjsupplicant.service'
+
+alias dicelogin='ssh -t dice ssh -t student.login'
+alias dicecompute='ssh -t dice ssh -t student.login ssh -t student.compute'
