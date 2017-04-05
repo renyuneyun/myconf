@@ -40,7 +40,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 mytextclock = awful.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
 
 -- Calendar
-theme.cal = lain.widgets.calendar({
+theme.cal = lain.widget.calendar({
     attach_to = { mytextclock },
     notification_preset = {
         font = "xos4 Terminus 10",
@@ -83,7 +83,7 @@ awful.button({ }, 5, function () awful.util.spawn("mpc volume -5") end)
 
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
-local mem = lain.widgets.mem({
+local mem = lain.widget.mem({
     settings = function()
         widget.value = mem_now.perc
     end
@@ -102,7 +102,7 @@ memwidget = wibox.widget {
 
 -- CPU
 local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
-local cpu = lain.widgets.cpu({
+local cpu = lain.widget.cpu({
     settings = function()
         widget.value = cpu_now.usage
     end
@@ -121,7 +121,7 @@ cpuwidget = wibox.widget {
 
 -- Coretemp
 local tempicon = wibox.widget.imagebox(theme.widget_temp)
-local temp = lain.widgets.temp({
+local temp = lain.widget.temp({
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
     end
@@ -134,7 +134,7 @@ tempwidget = wibox.widget {
 
 -- / fs
 local fsicon = wibox.widget.imagebox(theme.widget_hdd)
-theme.fs = lain.widgets.fs({
+theme.fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
     settings = function()
@@ -150,7 +150,7 @@ fswidget = wibox.widget {
 
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
-local bat = lain.widgets.bat({
+local bat = lain.widget.bat({
     settings = function()
         if bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
@@ -180,7 +180,7 @@ batwidget = wibox.widget {
 
 -- Net
 local neticon = wibox.widget.imagebox(theme.widget_net)
-local net = lain.widgets.net({
+local net = lain.widget.net({
     settings = function()
         widget:set_markup(markup.font(theme.font,
                           markup("#7AC82E", " " .. net_now.received)
