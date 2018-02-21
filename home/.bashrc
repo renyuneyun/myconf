@@ -8,6 +8,8 @@ fi
 
 [[ $- != *i* ]] && return
 
+PS1='[\u@\h \W]\$'
+
 #powerline-shell settings{{{1
 excf="~/git/net/powerline-shell/powerline-shell.py"
 if [ -e $excf ]; then
