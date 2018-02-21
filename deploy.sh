@@ -3,6 +3,7 @@
 repo_dir=`pwd`
 
 function dealdir {
+	local curdir="`pwd`";
 	local srcdir=$1;
 	local dstdir=$2;
 	local dirmade=false;
@@ -23,6 +24,7 @@ function dealdir {
 			ln -sr $i $dstdir/$i;
 		fi
 	done
+	cd "$curdir";
 }
 
 if [ -z $1 ]; then
