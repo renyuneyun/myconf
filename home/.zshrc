@@ -33,3 +33,14 @@ plscript='/usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh'
 
 hash thefuck &>/dev/null && eval $(thefuck --alias)
 
+export VENV_LOCATION=$HOME/venvs
+function venv {
+	env_name=$1
+	env_dir=$VENV_LOCATION/$env_name
+	if [ -d $env_dir ]; then
+		source $env_dir/bin/activate
+	else
+		echo Virtual Environment $env_name doesn\'t exist
+	fi
+}
+
