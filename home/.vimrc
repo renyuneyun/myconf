@@ -27,6 +27,7 @@ Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plugin 'Raimondi/delimitMate' "括號等自動補全
 au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
 Plugin 'tpope/vim-surround' "編輯環繞符號
+Plugin 'tpope/vim-commentary' "註釋代碼
 "Rainbow Parentheses
 Plugin 'luochen1990/rainbow'
 let g:rainbow_active = 1
@@ -64,6 +65,9 @@ let g:syntastic_warning_symbol = '>'
 Plugin 'scrooloose/syntastic' "代碼分析
 if v:version >= 703
 	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
+endif
+if has('signs')
+	Plugin 'airblade/vim-gitgutter' "顯示git diff中的增改情況
 endif
 if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
@@ -118,6 +122,8 @@ Plugin 'asins/vimcdoc' "vim中文幫助文檔
 if executable("fcitx")
 	Plugin 'fcitx.vim'
 endif
+
+Plugin 'niklasl/vim-rdf' "RDF
 
 call vundle#end()
 filetype plugin indent on
@@ -360,3 +366,6 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 au FileType go map <F9> :GoBuild<cr>
 au FileType go map <S-F9> :GoRun<cr>
 " }}}
+
+
+au FileType c,cpp,java,cs,python,go :SemanticHighlight
