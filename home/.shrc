@@ -29,3 +29,5 @@ alias ns_rj='sudo systemctl restart rjsupplicant.service'
 
 alias dicelogin='ssh -t dice ssh -t student.login'
 alias dicecompute='ssh -t dice ssh -t student.login ssh -t student.compute'
+
+alias closelcd="xset dpms force off"
