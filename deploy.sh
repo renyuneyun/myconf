@@ -21,6 +21,9 @@ function dealdir {
 			if ! $dirmade; then
 				mkdir -p $dstdir && dirmade=true || {echo "Cannot make $dstdir" && continue};
 			fi
+			if [ -L $dstdir/$i ]; then
+				rm $dstdir/$i;
+			fi
 			ln -sr $i $dstdir/$i;
 		fi
 	done
