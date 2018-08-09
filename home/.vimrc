@@ -58,11 +58,6 @@ Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-session'
 
-"let g:syntastic_python_checkers=['pylint']
-"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
-let g:syntastic_error_symbol = '>>'
-let g:syntastic_warning_symbol = '>'
-Plugin 'scrooloose/syntastic' "代碼分析
 if v:version >= 703
 	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
 endif
@@ -79,6 +74,15 @@ else "不使用YCM的代碼補全
 	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 	let g:jedi#force_py_version = 3
+endif
+if has('nvim') || v:version > 800
+	Plugin 'neomake/neomake' "異步的syntastic
+else
+	"let g:syntastic_python_checkers=['pylint']
+	"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
+	let g:syntastic_error_symbol = '>>'
+	let g:syntastic_warning_symbol = '>'
+	Plugin 'scrooloose/syntastic' "代碼分析
 endif
 if executable("go")
 	Plugin 'fatih/vim-go'
@@ -112,6 +116,8 @@ if executable("go")
 					\ }
 	endif
 endif
+Plugin 'rust-lang/rust.vim' "Rust
+Plugin 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
 Plugin 'othree/xml.vim' "XML
 Plugin 'html5.vim' "HTML5 + inline SVG
 Plugin 'ap/vim-css-color' "CSS color shower
@@ -368,4 +374,4 @@ au FileType go map <S-F9> :GoRun<cr>
 " }}}
 
 
-au FileType c,cpp,java,cs,python,go :SemanticHighlight
+au FileType c,cpp,java,cs,python,go,rust :SemanticHighlight
