@@ -11,25 +11,27 @@ let g:email  = 'renyuneyun@gmail.com'
 let g:license= 'Apache 2.0 (See LICENSE)'
 "}}}
 
-"Vundle配置{{{
+"插件配置{{{
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim' "Vundle itself
-if executable("ctags")
-	"Plugin 'taglist.vim' "TagList
-	Plugin 'majutsushi/tagbar'
-	Plugin 'TagHighlight'
-	"Plugin 'bandit.vim'
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
-Plugin 'scrooloose/nerdtree' "file browser
-Plugin 'fholgado/minibufexpl.vim' "mini Buffer Explorer
-Plugin 'Raimondi/delimitMate' "括號等自動補全
+call plug#begin()
+if executable("ctags")
+	"Plug 'taglist.vim' "TagList
+	Plug 'majutsushi/tagbar'
+	Plug 'vim-scripts/TagHighlight'
+	"Plug 'bandit.vim'
+endif
+Plug 'scrooloose/nerdtree' "file browser
+Plug 'fholgado/minibufexpl.vim' "mini Buffer Explorer
+Plug 'Raimondi/delimitMate' "括號等自動補全
 au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
-Plugin 'tpope/vim-surround' "編輯環繞符號
-Plugin 'tpope/vim-commentary' "註釋代碼
+Plug 'tpope/vim-surround' "編輯環繞符號
+Plug 'tpope/vim-commentary' "註釋代碼
 "Rainbow Parentheses
-Plugin 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_conf = {
 			\   'guifgs': ['white', 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
@@ -53,39 +55,39 @@ let g:rainbow_conf = {
 			\       'css': 0,
 			\   }
 			\}
-Plugin 'jaxbot/semantic-highlight.vim'
-Plugin 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
-"Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-session'
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
+"Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-session'
 
 if v:version >= 703
-	Plugin 'Yggdroot/indentLine' "縮進對齊豎線
+	Plug 'Yggdroot/indentLine' "縮進對齊豎線
 endif
 if has('signs')
-	Plugin 'airblade/vim-gitgutter' "顯示git diff中的增改情況
+	Plug 'airblade/vim-gitgutter' "顯示git diff中的增改情況
 endif
 if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax = 1
 	let g:ycm_extra_conf_globlist = ['~/coding/*']
-	Plugin 'Valloric/YouCompleteMe' "代碼補全
+	Plug 'Valloric/YouCompleteMe' "代碼補全
 else "不使用YCM的代碼補全
-	Plugin 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
-	Plugin 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
+	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
+	Plug 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 	let g:jedi#force_py_version = 3
 endif
 if has('nvim') || v:version > 800
-	Plugin 'neomake/neomake' "異步的syntastic
+	Plug 'neomake/neomake' "異步的syntastic
 else
 	"let g:syntastic_python_checkers=['pylint']
 	"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
 	let g:syntastic_error_symbol = '>>'
 	let g:syntastic_warning_symbol = '>'
-	Plugin 'scrooloose/syntastic' "代碼分析
+	Plug 'scrooloose/syntastic' "代碼分析
 endif
 if executable("go")
-	Plugin 'fatih/vim-go'
+	Plug 'fatih/vim-go'
 	if executable("gotags")
 		let g:tagbar_type_go = {
 					\ 'ctagstype' : 'go',
@@ -116,27 +118,30 @@ if executable("go")
 					\ }
 	endif
 endif
-Plugin 'rust-lang/rust.vim' "Rust
-Plugin 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
-Plugin 'othree/xml.vim' "XML
-Plugin 'html5.vim' "HTML5 + inline SVG
-Plugin 'ap/vim-css-color' "CSS color shower
-Plugin 'StanAngeloff/php.vim'
-Plugin 'pangloss/vim-javascript'
+Plug 'rust-lang/rust.vim' "Rust
+Plug 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
+Plug 'othree/xml.vim' "XML
+Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
+Plug 'ap/vim-css-color' "CSS color shower
+Plug 'StanAngeloff/php.vim'
+Plug 'pangloss/vim-javascript'
 
-Plugin 'asins/vimcdoc' "vim中文幫助文檔
+Plug 'asins/vimcdoc' "vim中文幫助文檔
 if executable("fcitx")
-	Plugin 'fcitx.vim'
+	Plug 'vim-scripts/fcitx.vim'
 endif
 
-Plugin 'niklasl/vim-rdf' "RDF
+Plug 'niklasl/vim-rdf' "RDF
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
-"}}}Vundle配置結束
+"}}}插件配置結束
 
 "外觀設置（字體，主體）{{{
-set guifont=Monaco\ 16,DejaVu\ Sans\ Mono\ 16
+if has('nvim')
+else
+	set guifont=Monaco\ 16,DejaVu\ Sans\ Mono\ 16
+endif
 colorscheme evening
 "}}}外觀設置完
 
