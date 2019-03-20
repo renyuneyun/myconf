@@ -272,7 +272,7 @@ noremap <C-S-TAB> :MBEbp<CR>
 map <F5> :YcmCompleter GoTo<cr>
 map <F6> :YcmCompleter GoToDefinition<cr>
 map <F7> :YcmCompleter GoToDeclaration<cr>
-map <F8> :YcmCompleter GetParent<cr>
+map <F8> :YcmCompleter GoToReferences<cr>
 	"}}}
 "}}}
 
