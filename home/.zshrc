@@ -10,6 +10,7 @@ bindkey -e
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
+fpath=(.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -27,7 +28,7 @@ fi
 
 # powerline {{{
 TTY=`tty`
-plscript='/usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh'
+plscript='/usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh'
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
 
