@@ -40,6 +40,10 @@ f_zas=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 f_aj=$HOME/.autojump/etc/profile.d/autojump.sh
 [[ -s $f_aj ]] && source $f_aj
 
+# fzf-z
+f_fzf_z=/home/ryey/vcs/fzf-z/fzf-z.plugin.zsh
+[[ -s $f_fzf_z ]] && source $f_fzf_z && export FZFZ_RECENT_DIRS_TOOL=autojump
+
 # powerline {{{
 TTY=`tty`
 plscript='/usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh'
