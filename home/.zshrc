@@ -34,9 +34,11 @@ fi
 
 # fish風格的命令提示
 f_zas=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-if [ -f $f_zas ]; then
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
+[[ -s $f_zas ]] && source $f_zas
+
+# autojump
+f_aj=$HOME/.autojump/etc/profile.d/autojump.sh
+[[ -s $f_aj ]] && source $f_aj
 
 # powerline {{{
 TTY=`tty`
