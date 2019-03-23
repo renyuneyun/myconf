@@ -11,12 +11,18 @@ bindkey -e
 zstyle :compinstall filename '~/.zshrc'
 
 fpath=(.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/zsh/site-functions $fpath)
-autoload -Uz compinit
+autoload -Uz compinit promptinit
 compinit
+promptinit
 # End of lines added by compinstall
-zstyle ':completion:*' menu select #選擇自動補全項目
+
+zstyle ':completion:*' menu select  # 選擇自動補全項目
+# 自動cd
+setopt autocd
 #擴展路徑
 setopt complete_in_word
+# 歷史記錄去重複
+setopt HIST_IGNORE_DUPS
 
 if [ -f ~/.shrc ]; then
 	source ~/.shrc
@@ -24,6 +30,12 @@ fi
 
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# fish風格的命令提示
+f_zas=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f $f_zas ]; then
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 # powerline {{{
