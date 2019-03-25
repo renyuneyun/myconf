@@ -31,3 +31,10 @@ alias dicelogin='ssh -t dice ssh -t student.login'
 alias dicecompute='ssh -t dice ssh -t student.login ssh -t student.compute'
 
 alias closelcd="xset dpms force off"
+
+# virtualenvwrapper
+f_vw=/usr/bin/virtualenvwrapper_lazy.sh
+if [ -f $f_vw ]; then
+	source $f_vw
+	export WORKON_HOME=~/venvs
+fi
