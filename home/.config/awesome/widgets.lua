@@ -37,7 +37,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
 --mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %a ", 1)
-mytextclock = awful.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
+mytextclock = wibox.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
 
 -- Calendar
 theme.cal = lain.widget.calendar({

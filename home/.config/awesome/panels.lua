@@ -17,8 +17,8 @@ local function vert_list_update(w, buttons, label, data, objects)
         else
             ib = wibox.widget.imagebox()
             tb = wibox.widget.textbox()
-            bgb = wibox.widget.background()
-            m = wibox.layout.margin(tb, 12, 4)
+            bgb = wibox.container.background()
+            m = wibox.container.margin(tb, 12, 4)
             l = wibox.layout.fixed.vertical()
 
             -- All of this is added in a fixed widget
@@ -114,7 +114,7 @@ function setup_left_panel(taglist_buttons)
         -- Create a taglist widget
         s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons, nil, vert_list_update, wibox.layout.fixed.vertical())
 
-        s.mywibox_left = awful.wibox({ position = "left", screen = s, width = 40 })
+        s.mywibox_left = awful.wibar({ position = "left", screen = s, width = 40 })
         s.mywibox_left:setup {
             layout = wibox.layout.align.vertical,
             { -- Top widgets
