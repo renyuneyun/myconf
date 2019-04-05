@@ -37,10 +37,10 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
 --mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %a ", 1)
-mytextclock = awful.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
+mytextclock = wibox.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
 
 -- Calendar
-theme.cal = lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
         font = "xos4 Terminus 10",
@@ -138,8 +138,8 @@ theme.fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
     settings = function()
-        local color = pp_rgb(theme.fg_normal, 100-fs_now.used)
-        widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, fs_now.used)))
+        local color = pp_rgb(theme.fg_normal, 100-fs_now["/"].percentage)
+        widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, fs_now["/"].percentage)))
     end
 })
 fswidget = wibox.widget {

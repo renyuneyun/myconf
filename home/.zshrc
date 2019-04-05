@@ -3,20 +3,26 @@ if [ -f /etc/zsh/zprofile ]; then
 fi
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=2000
+SAVEHIST=2000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
 fpath=(.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/zsh/site-functions $fpath)
-autoload -Uz compinit
+autoload -Uz compinit promptinit
 compinit
+promptinit
 # End of lines added by compinstall
-zstyle ':completion:*' menu select #選擇自動補全項目
+
+zstyle ':completion:*' menu select  # 選擇自動補全項目
+# 自動cd
+setopt autocd
 #擴展路徑
 setopt complete_in_word
+# 歷史記錄去重複
+setopt HIST_IGNORE_DUPS
 
 if [ -f ~/.shrc ]; then
 	source ~/.shrc
@@ -25,6 +31,18 @@ fi
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+# fish風格的命令提示
+f_zas=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -s $f_zas ]] && source $f_zas
+
+# autojump
+f_aj=$HOME/.autojump/etc/profile.d/autojump.sh
+[[ -s $f_aj ]] && source $f_aj
+
+# fzf-z
+f_fzf_z=/home/ryey/vcs/fzf-z/fzf-z.plugin.zsh
+[[ -s $f_fzf_z ]] && source $f_fzf_z && export FZFZ_RECENT_DIRS_TOOL=autojump
 
 # powerline {{{
 TTY=`tty`
