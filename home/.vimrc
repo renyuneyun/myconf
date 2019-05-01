@@ -5,13 +5,13 @@ else
 endif
 set nocompatible
 
-"{{{個人信息
+"個人信息{{{2
 let g:author = 'renyuneyun'
 let g:email  = 'renyuneyun@gmail.com'
 let g:license= 'Apache 2.0 (See LICENSE)'
-"}}}
+"1}}}
 
-"插件配置{{{
+"插件配置{{{1
 filetype off
 " Load vim-plug
 if empty(glob("~/.vim/autoload/plug.vim"))
@@ -151,23 +151,23 @@ Plug 'niklasl/vim-rdf' "RDF
 
 call plug#end()
 filetype plugin indent on
-"}}}插件配置結束
+"1}}}
 
-"外觀設置（字體，主體）{{{
+"外觀設置（字體，主體）{{{1
 if has('nvim')
 else
 	set guifont=Monaco\ 16,DejaVu\ Sans\ Mono\ 16
 endif
 colorscheme evening
-"}}}外觀設置完
+"1}}}
 
-"編碼，換行設置{{{
+"編碼，換行設置{{{1
 set encoding=utf-8 "vim內部編碼
 set fileencodings=utf-8,gb18030,big5 "讀取文件編碼嘗試
 set fileencoding=utf-8 "保存文件編碼
 set termencoding=utf-8
 set fileformats=unix
-"}}}完
+"1}}}
 
 "跳轉到上次位置{{{
 if has("autocmd")
@@ -192,7 +192,7 @@ set foldlevelstart=2
 "set autoindent
 "set cindent
 
-"CTags & CScope{{{0
+"CTags & CScope{{{1
 autocmd BufEnter * lcd %:p:h
 map <F10> :call Do_CsTag()<CR>
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
@@ -258,7 +258,7 @@ function Do_CsTag()
         endif
     endif
 endfunction
-"0}}}
+"1}}}
 
 "插件配置{{{
 set laststatus=2 "始終顯示狀態行，以顯示vim-airline
@@ -288,20 +288,20 @@ endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 "}}}
 
-"FileType設定{{{0
-"代碼風格{{{1
+"FileType設定{{{1
+"代碼風格{{{2
 syntax enable
 filetype plugin indent on
-"1}}}
+"2}}}
 "Python{{{2
 :autocmd FileType python : set foldmethod=indent
 ":autocmd FileType python :set smartindent 
 :autocmd FileType python :set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 "2}}}
-"0}}}
+"1}}}
 
-"自動添加作者信息等代碼註釋{{{0
-"自linuxzen.com{{{1
+"自動添加作者信息等代碼註釋{{{1
+"自linuxzen.com{{{2
 "Python 注释
 function! InsertPythonComment()
 	exe 'normal'.1.'G'
@@ -340,7 +340,7 @@ function! InsertPythonCommentWhenOpen()
 endfunc
 au FileType python :%call InsertPythonCommentWhenOpen()
 au FileType python map <F4> :call InsertPythonComment()<cr>
-"1}}}
+"2}}}
 "自修改{{{2
 "clang{{{3
 function! InsertCodeComment()
@@ -379,7 +379,7 @@ au FileType java,cs :%call InsertCodeCommentWhenOpen()
 au FileType c,cpp,java,cs map <F4> :call InsertCodeComment()<cr>
 "3}}}
 "2}}}
-"0}}}
+"1}}}
 
 " 修改變量名 自http://stackoverflow.com/questions/597687/changing-variable-names-in-vim {{{
 " For local replace
@@ -396,3 +396,6 @@ au FileType go map <S-F9> :GoRun<cr>
 
 
 au FileType c,cpp,java,cs,python,go,rust :SemanticHighlight
+
+au FileType vim setlocal foldmethod=marker
+au FileType vim setlocal foldlevel=0
