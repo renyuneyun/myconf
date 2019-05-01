@@ -149,6 +149,15 @@ endif
 
 Plug 'niklasl/vim-rdf' "RDF
 
+"UltiSnips{{{2
+if has("python") || has("python3") || has("python2")
+	Plug 'SirVer/ultisnips'
+	Plug 'honza/vim-snippets'
+	let g:UltiSnipsEditSplit="vertical"
+	let g:UltiSnipsExpandTrigger="<A-a>"
+endif
+"2}}}
+
 call plug#end()
 filetype plugin indent on
 "1}}}
