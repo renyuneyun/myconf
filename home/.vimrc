@@ -158,14 +158,17 @@ if has("python") || has("python3") || has("python2")
 endif
 "2}}}
 
+Plug 'lervag/vimtex'
+
 call plug#end()
 filetype plugin indent on
 "1}}}
 
 "外觀設置（字體，主體）{{{1
 if has('nvim')
+	set guifont=Fira\ Code:h16
 else
-	set guifont=Monaco\ 16,DejaVu\ Sans\ Mono\ 16
+	set guifont=Fira\ Code\ 16,Monaco\ 16,DejaVu\ Sans\ Mono\ 16
 endif
 colorscheme evening
 "1}}}
