@@ -90,83 +90,100 @@ if empty(glob("~/.vim/autoload/plug.vim"))
 	execute '!curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 call plug#begin()
+
+"Vim表現{{{
+"Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-session'
+Plug 'asins/vimcdoc' "vim中文幫助文檔
+
+if executable("fcitx") "fcitx自動切換{{{
+	Plug 'lilydjwg/fcitx.vim'
+	"Plug 'vim-scripts/fcitx.vim'
+endif "}}}
+
+Plug 'fholgado/minibufexpl.vim' "mini Buffer Explorer
+Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } "file browser
+
 if executable("ctags")
-	if has('nvim') || v:version > 800
-		Plug 'ludovicchabant/vim-gutentags'
-	endif
 	"Plug 'taglist.vim' "TagList
 	Plug 'majutsushi/tagbar'
+endif
+
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' } "Profiling vim plugins
+"}}}
+
+"編程·UI{{{
+if has('signs')
+	Plug 'airblade/vim-gitgutter' "顯示git diff中的增改情況
+endif
+if v:version >= 703
+	Plug 'Yggdroot/indentLine' "縮進對齊豎線
+endif
+Plug 'ap/vim-css-color' "CSS顏色顯示
+Plug 'luochen1990/rainbow' "Rainbow Parentheses
+Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
+if executable("ctags") "TagHighlight
 	Plug 'vim-scripts/TagHighlight'
 	"Plug 'https://bitbucket.org/abudden/taghighlight' " in mercurial, can't be managed by vim-plug
 	"Plug 'bandit.vim'
 endif
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } "file browser
-Plug 'fholgado/minibufexpl.vim' "mini Buffer Explorer
-Plug 'Raimondi/delimitMate' "括號等自動補全
+"}}}
+
+"編程·通用功能{{{
 Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
-Plug 'luochen1990/rainbow' "Rainbow Parentheses
-Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
-Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
-"Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-session'
+Plug 'Raimondi/delimitMate' "括號等自動補全
 
-if v:version >= 703
-	Plug 'Yggdroot/indentLine' "縮進對齊豎線
-endif
-if has('signs')
-	Plug 'airblade/vim-gitgutter' "顯示git diff中的增改情況
-endif
-if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM要求Vim 7.3.584+ & CMake
-	Plug 'Valloric/YouCompleteMe' "代碼補全
-else "不使用YCM的代碼補全
-	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
-	Plug 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
-endif
-if has('nvim') || v:version > 800
-	Plug 'neomake/neomake' "異步的syntastic
-else
-	Plug 'scrooloose/syntastic' "代碼分析
-endif
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'rust-lang/rust.vim' "Rust
-Plug 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
-Plug 'othree/xml.vim' "XML
-Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
-Plug 'ap/vim-css-color' "CSS color shower
-Plug 'StanAngeloff/php.vim'
-Plug 'pangloss/vim-javascript'
-
-Plug 'asins/vimcdoc' "vim中文幫助文檔
-if executable("fcitx")
-	Plug 'lilydjwg/fcitx.vim'
-	"Plug 'vim-scripts/fcitx.vim'
-endif
-
-Plug 'niklasl/vim-rdf', { 'for': 'rdf' } "RDF
-
-Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' } "Profiling vim plugins
-
-"UltiSnips{{{
+"代碼片段{{{
 if has("python") || has("python3") || has("python2")
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
 endif
 "}}}
+"}}}
 
-Plug 'lervag/vimtex' "TeX
+"代碼補全與分析{{{
 
+if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM 要求Vim 7.3.584+ & CMake
+	Plug 'Valloric/YouCompleteMe' "代碼補全
+else "不使用YCM的代碼補全
+	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
+	Plug 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
+endif
+
+if executable("ctags")
+	if has('nvim') || v:version > 800
+		Plug 'ludovicchabant/vim-gutentags'
+	endif
+endif
+
+if has('nvim') || v:version > 800
+	Plug 'neomake/neomake' "異步的syntastic
+else
+	Plug 'scrooloose/syntastic' "代碼分析
+endif
+"}}}
+
+"諸語言{{{
+Plug 'fatih/vim-go', { 'for': 'go' } "Go
 Plug 'plytophogy/vim-virtualenv', { 'for': 'python', 'on': ['VirtualEnvList', 'VirtualEnvActivate'] } "VirtuelEnv support for vim
+Plug 'rust-lang/rust.vim' "Rust
+Plug 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
+Plug 'othree/xml.vim' "XML
+Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
+Plug 'pangloss/vim-javascript' "JS
+Plug 'StanAngeloff/php.vim' "PHP
+Plug 'niklasl/vim-rdf', { 'for': 'rdf' } "RDF
+Plug 'lervag/vimtex' "TeX
+"}}}
 
 call plug#end()
 filetype plugin indent on
 "1}}}
 
 "通常插件配置{{{1
-if HasPlugin("vim-airline") "{{{
-	set laststatus=2 "始終顯示狀態行，以顯示vim-airline
-endif "}}}
-
 if HasPlugin("fcitx.vim") "{{{
 	set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
 endif "}}}
@@ -177,32 +194,8 @@ if HasPlugin("minibufexpl.vim") "{{{
 	noremap <C-S-TAB> :MBEbp<CR>
 endif "}}}
 
-if HasPlugin("YouCompleteMe") "{{{
-	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
-	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-	let g:ycm_seed_identifiers_with_syntax = 1
-	let g:ycm_extra_conf_globlist = ['~/coding/*']
-
-	map <F5> :YcmCompleter GoTo<cr>
-	map <F6> :YcmCompleter GoToDefinition<cr>
-	map <F7> :YcmCompleter GoToDeclaration<cr>
-	map <F8> :YcmCompleter GoToReferences<cr>
-endif "}}}
-
-if HasPlugin("jedi") "{{{
-	let g:jedi#force_py_version = 3
-endif "}}}
-
-if HasPlugin("syntastic") "{{{
-	"let g:syntastic_python_checkers=['pylint']
-	"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
-	let g:syntastic_error_symbol = '>>'
-	let g:syntastic_warning_symbol = '>'
-endif "}}}
-
-if HasPlugin("ultisnips") "{{{
-	let g:UltiSnipsEditSplit="vertical"
-	let g:UltiSnipsExpandTrigger="<A-a>"
+if HasPlugin("vim-airline") "{{{
+	set laststatus=2 "始終顯示狀態行，以顯示vim-airline
 endif "}}}
 
 if HasPlugin("rainbow") "{{{
@@ -231,6 +224,34 @@ if HasPlugin("rainbow") "{{{
 				\}
 endif "}}}
 
+if HasPlugin("ultisnips") "{{{
+	let g:UltiSnipsEditSplit="vertical"
+	let g:UltiSnipsExpandTrigger="<A-a>"
+endif "}}}
+
+if HasPlugin("YouCompleteMe") "{{{
+	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
+	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+	let g:ycm_seed_identifiers_with_syntax = 1
+	let g:ycm_extra_conf_globlist = ['~/coding/*']
+
+	map <F5> :YcmCompleter GoTo<cr>
+	map <F6> :YcmCompleter GoToDefinition<cr>
+	map <F7> :YcmCompleter GoToDeclaration<cr>
+	map <F8> :YcmCompleter GoToReferences<cr>
+endif "}}}
+
+if HasPlugin("jedi") "{{{
+	let g:jedi#force_py_version = 3
+endif "}}}
+
+if HasPlugin("syntastic") "{{{
+	"let g:syntastic_python_checkers=['pylint']
+	"let g:syntastic_ignore_files=[".*\.py$"] "相傳syntastic檢查py時會卡噸，而已有pylint檢查
+	let g:syntastic_error_symbol = '>>'
+	let g:syntastic_warning_symbol = '>'
+endif "}}}
+
 if HasPlugin("vim-gutentags") "{{{
 	" 抄自 http://www.skywind.me/blog/archives/2084
 	set tags=./.tags;,.tags
@@ -246,7 +267,6 @@ if HasPlugin("vim-gutentags") "{{{
 	let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 	let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 endif "}}}
-
 "1}}}
 
 "語言{{{1
@@ -307,6 +327,7 @@ if executable("gotags")
 endif
 "}}}
 "1}}}
+
 
 "CTags & CScope{{{1
 autocmd BufEnter * lcd %:p:h
@@ -375,7 +396,6 @@ function! Do_CsTag()
     endif
 endfunction
 "1}}}
-
 
 "自動添加作者信息等代碼註釋{{{1
 "個人信息{{{2
