@@ -11,11 +11,19 @@ let g:email  = 'renyuneyun@gmail.com'
 let g:license= 'Apache 2.0 (See LICENSE)'
 "1}}}
 
+"vimrc輔助函數{{{1
+let s:plugin_dir = glob("~/.vim/plugged")
+function! HasPlugin(name)
+	let dir_name = s:plugin_dir . "/" . a:name
+	return isdirectory(dir_name) && !empty(dir_name)
+endfunction
+"1}}}
+
 "插件配置{{{1
 filetype off
 " Load vim-plug
 if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+	execute '!curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 call plug#begin()
 if executable("ctags")
@@ -49,29 +57,6 @@ Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
 "Rainbow Parentheses
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1
-let g:rainbow_conf = {
-			\   'guifgs': ['white', 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-			\   'ctermfgs': ['white', 'blue', 'yellow', 'cyan', 'magenta', 'red', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-			\   'operators': '_,_',
-			\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-			\   'separately': {
-			\       '*': {},
-			\       'tex': {
-			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-			\       },
-			\       'lisp': {
-			\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-			\       },
-			\       'vim': {
-			\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-			\       },
-			\       'html': {
-			\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-			\       },
-			\       'css': 0,
-			\   }
-			\}
 Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
 Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plug 'xolox/vim-misc'
@@ -158,8 +143,6 @@ Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' } "Profiling vim plug
 if has("python") || has("python3") || has("python2")
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
-	let g:UltiSnipsEditSplit="vertical"
-	let g:UltiSnipsExpandTrigger="<A-a>"
 endif
 "2}}}
 
@@ -205,6 +188,38 @@ set nu "行號
 set foldlevelstart=2
 "}}}顯示設置完
 
+"插件設置{{{1
+if HasPlugin("ultisnips")
+	let g:UltiSnipsEditSplit="vertical"
+	let g:UltiSnipsExpandTrigger="<A-a>"
+endif
+
+if HasPlugin("rainbow")
+	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+				\   'guifgs': ['white', 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+				\   'ctermfgs': ['white', 'blue', 'yellow', 'cyan', 'magenta', 'red', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+				\   'operators': '_,_',
+				\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+				\   'separately': {
+				\       '*': {},
+				\       'tex': {
+				\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+				\       },
+				\       'lisp': {
+				\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+				\       },
+				\       'vim': {
+				\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+				\       },
+				\       'html': {
+				\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+				\       },
+				\       'css': 0,
+				\   }
+				\}
+endif
+"1}}}
 
 "set autoindent
 "set cindent
