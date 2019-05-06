@@ -15,7 +15,7 @@ let g:license= 'Apache 2.0 (See LICENSE)'
 filetype off
 " Load vim-plug
 if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    execute '!curl --create-dirs -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 call plug#begin()
 if executable("ctags")
@@ -38,9 +38,10 @@ if executable("ctags")
 	"Plug 'taglist.vim' "TagList
 	Plug 'majutsushi/tagbar'
 	Plug 'vim-scripts/TagHighlight'
+	"Plug 'https://bitbucket.org/abudden/taghighlight' " in mercurial, can't be managed by vim-plug
 	"Plug 'bandit.vim'
 endif
-Plug 'scrooloose/nerdtree' "file browser
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } "file browser
 Plug 'fholgado/minibufexpl.vim' "mini Buffer Explorer
 Plug 'Raimondi/delimitMate' "括號等自動補全
 au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
@@ -71,7 +72,7 @@ let g:rainbow_conf = {
 			\       'css': 0,
 			\   }
 			\}
-Plug 'jaxbot/semantic-highlight.vim'
+Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
 Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 "Plug 'xolox/vim-misc'
 "Plug 'xolox/vim-session'
@@ -144,10 +145,14 @@ Plug 'pangloss/vim-javascript'
 
 Plug 'asins/vimcdoc' "vim中文幫助文檔
 if executable("fcitx")
-	Plug 'vim-scripts/fcitx.vim'
+	"Plug 'vim-scripts/fcitx.vim'
+
+	Plug 'lilydjwg/fcitx.vim'
 endif
 
-Plug 'niklasl/vim-rdf' "RDF
+Plug 'niklasl/vim-rdf', { 'for': 'rdf' } "RDF
+
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' } "Profiling vim plugins
 
 call plug#end()
 filetype plugin indent on
@@ -203,7 +208,7 @@ nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
 nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-function Do_CsTag()
+function! Do_CsTag()
     let dir = getcwd()
     if filereadable("tags")
         if (g:isunix == 1)
