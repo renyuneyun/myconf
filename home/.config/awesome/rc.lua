@@ -225,7 +225,7 @@ globalkeys = awful.util.table.join(
         awful.util.spawn("pactl set-sink-mute 0 toggle") end),
     -- screenshot
     awful.key({}, "Print", function()
-        awful.util.spawn_with_shell("scrot -e 'mv $f ~/Image/ScreenShot'") end),
+        awful.util.spawn_with_shell("flameshot gui") end),
 -- }}}
 
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
