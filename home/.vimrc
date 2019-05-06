@@ -156,6 +156,8 @@ endif
 
 Plug 'lervag/vimtex' "TeX
 
+Plug 'plytophogy/vim-virtualenv', { 'for': 'python', 'on': ['VirtualEnvList', 'VirtualEnvActivate'] } "VirtuelEnv support for vim
+
 call plug#end()
 filetype plugin indent on
 "1}}}
