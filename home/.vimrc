@@ -51,6 +51,11 @@ syntax enable
 filetype plugin indent on
 "}}}
 
+"外部工具{{{
+set cscopetag                  " 使用 cscope 作为 tags 命令
+set cscopeprg='gtags-cscope'   " 使用 gtags-cscope 代替 cscope
+"}}}
+
 "1}}}
 
 "功能定製{{{1
@@ -135,6 +140,8 @@ endif
 Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
 Plug 'Raimondi/delimitMate' "括號等自動補全
+
+Plug 'Chiel92/vim-autoformat'
 
 "代碼片段{{{
 if has("python") || has("python3") || has("python2")
@@ -253,12 +260,21 @@ if HasPlugin("syntastic") "{{{
 endif "}}}
 
 if HasPlugin("vim-gutentags") "{{{
-	" 抄自 http://www.skywind.me/blog/archives/2084
-	set tags=./.tags;,.tags
+	" 抄自 http://www.skywind.me/blog/archives/2084 和 https://zhuanlan.zhihu.com/p/36279445
+	set tags=./.tags;,.tags "TODO: 這行是幹嘛的？？？沒見到使用這個變量
 	" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 	let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 	" 所生成的数据文件的名称
 	let g:gutentags_ctags_tagfile = '.tags'
+
+	let g:gutentags_modules = []
+	if executable('ctags')
+		let g:gutentags_modules += ['ctags']
+	endif
+	if executable('gtags-cscope') && executable('gtags')
+		let g:gutentags_modules += ['gtags_cscope']
+	endif
+
 	" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
 	let s:vim_tags = expand('~/.cache/tags')
 	let g:gutentags_cache_dir = s:vim_tags
@@ -266,6 +282,12 @@ if HasPlugin("vim-gutentags") "{{{
 	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 	let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 	let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+	" 如果使用 universal ctags 需要增加下面一行
+	let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+	" 禁用 gutentags 自动加载 gtags 数据库的行为
+	"let g:gutentags_auto_add_gtags_cscope = 0
 endif "}}}
 "1}}}
 
@@ -274,6 +296,9 @@ endif "}}}
 "多語言{{{
 au FileType c,cpp,java,cs,python,go,rust :SemanticHighlight
 "}}}
+
+let $GTAGSLABEL = 'native-pygments'
+let $GTAGSCONF = '/usr/share/gtags/gtags.conf'
 
 "Python{{{
 :autocmd FileType python : set foldmethod=indent
