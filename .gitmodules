@@ -4,3 +4,6 @@
 [submodule "home/.config/awesome/third_party/lain"]
 	path = home/.config/awesome/third_party/lain
 	url = https://github.com/copycat-killer/lain.git
+[submodule "home/.config/awesome/third_party/awesome-copycats"]
+	path = home/.config/awesome/third_party/awesome-copycats
+	url = https://github.com/lcpz/awesome-copycats.git

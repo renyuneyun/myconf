@@ -85,7 +85,7 @@ theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez
 
 -- {{{ Misc
 --theme.awesome_icon           = "/usr/share/awesome/themes/zenburn/awesome-icon.png"
-theme.awesome_icon           = "/home/ryey/self/ryey.png"
+theme.awesome_icon           = "/home/ryey/Image/avatar/ryey.png"
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
 -- }}}
 
@@ -138,7 +138,7 @@ theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zen
 -- }}}
 
 
-theme.dir2="/home/ryey/.config/awesome.2/themes/powerarrow-darker"
+theme.dir2 = theme.dir .. "/awesome-copycats/themes/powerarrow-dark"
 theme.widget_ac                                 = theme.dir2 .. "/icons/ac.png"
 theme.widget_battery                            = theme.dir2 .. "/icons/battery.png"
 theme.widget_battery_low                        = theme.dir2 .. "/icons/battery_low.png"
