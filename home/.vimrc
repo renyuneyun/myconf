@@ -142,6 +142,8 @@ Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
 Plug 'Raimondi/delimitMate' "括號等自動補全
 
+Plug 'tpope/vim-sleuth' "自動探測縮進
+
 Plug 'dhruvasagar/vim-table-mode'
 
 Plug 'Chiel92/vim-autoformat'
