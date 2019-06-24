@@ -130,7 +130,8 @@ Plug 'ap/vim-css-color' "CSS顏色顯示
 Plug 'luochen1990/rainbow' "Rainbow Parentheses
 Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
 if executable("ctags") "TagHighlight
-	Plug 'vim-scripts/TagHighlight'
+	"Plug 'vim-scripts/TagHighlight'
+	Plug 'abudden/taghighlight-automirror'
 	"Plug 'https://bitbucket.org/abudden/taghighlight' " in mercurial, can't be managed by vim-plug
 	"Plug 'bandit.vim'
 endif
@@ -140,6 +141,8 @@ endif
 Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
 Plug 'Raimondi/delimitMate' "括號等自動補全
+
+Plug 'dhruvasagar/vim-table-mode'
 
 Plug 'Chiel92/vim-autoformat'
 
@@ -238,6 +241,7 @@ endif "}}}
 
 if HasPlugin("YouCompleteMe") "{{{
 	let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
+	let g:ycm_rust_src_path = '~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 	let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax = 1
 	let g:ycm_extra_conf_globlist = ['~/coding/*']
