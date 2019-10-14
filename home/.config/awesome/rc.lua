@@ -188,7 +188,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, awful.layout.layouts[3])
+    awful.tag({ '甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸' }, s, awful.layout.layouts[2])
 end)
 
 --TODO require("panels")
@@ -341,10 +341,10 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
     awful.key({ modkey, "Control", "Shift" }, "j",
-        function (c) awful.client.movetoscreen(c,c.screen+1) end,
+        function (c) awful.client.movetoscreen(c,c.screen.index+1) end,
         {description = "move focused client to next screen", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "k",
-        function (c) awful.client.movetoscreen(c,c.screen-1) end,
+        function (c) awful.client.movetoscreen(c,c.screen.index-1) end,
         {description = "move focused client to previous screen", group = "screen"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
