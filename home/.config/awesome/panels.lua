@@ -127,8 +127,8 @@ function setup_left_panel(taglist_buttons)
             { -- Bottom widgets
                 layout = wibox.layout.fixed.vertical,
                 isystray,
-                memwidget,
                 cpuwidget,
+                memwidget,
             },
         }
     end)
