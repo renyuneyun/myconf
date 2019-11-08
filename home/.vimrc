@@ -156,23 +156,43 @@ endif
 "}}}
 "}}}
 
-"代碼補全與分析{{{
+"編程·語言特色插件{{{
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoUpdateBinaries' } "Go
+Plug 'plytophogy/vim-virtualenv', { 'for': 'python', 'on': ['VirtualEnvList', 'VirtualEnvActivate'] } "VirtuelEnv support for vim
+Plug 'rust-lang/rust.vim', { 'for': 'rust' } "Rust
+Plug 'othree/xml.vim' "XML
+Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
+Plug 'pangloss/vim-javascript' "JS
+Plug 'StanAngeloff/php.vim' "PHP
+Plug 'niklasl/vim-rdf', { 'for': 'rdf' } "RDF
+Plug 'lervag/vimtex' "TeX
+"}}}
 
-if has('nvim')
+"編程·自動補全與分析{{{
+
+"自動補全框架及框架相關{{{1
+if has('nvim') "deoplete爲neovim開發 TODO: 加入vim 8下的deoplete
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'Shougo/deoplete-clangx' "C-family languages
 	Plug 'davidhalter/jedi', { 'for': 'python' } "Python
 	Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } "依賴jedi
 	if executable("go")
-	  Plug 'stamblerre/gocode', { 'for': 'go' } "Golang
-	  Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'} "依賴gocode
+		Plug 'stamblerre/gocode', { 'for': 'go' } "Golang
+		Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'} "依賴gocode
 	endif
 elseif (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM 要求Vim 7.3.584+ & CMake
 	Plug 'Valloric/YouCompleteMe' "代碼補全
-else "不使用YCM的代碼補全
+else "不使用框架的自動補全
 	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plug 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 endif
+"1}}}
+
+"各框架下的自動補全{{{1
+if executable('racer')
+	Plug 'racer-rust/vim-racer', { 'for': 'rust' } "Racer (Rust Auto-CompletER)
+endif
+"1}}}
 
 if executable("ctags")
 	if has('nvim') || v:version > 800
@@ -185,19 +205,6 @@ if has('nvim') || v:version > 800
 else
 	Plug 'scrooloose/syntastic' "代碼分析
 endif
-"}}}
-
-"諸語言{{{
-Plug 'fatih/vim-go', { 'for': 'go' } "Go
-Plug 'plytophogy/vim-virtualenv', { 'for': 'python', 'on': ['VirtualEnvList', 'VirtualEnvActivate'] } "VirtuelEnv support for vim
-Plug 'rust-lang/rust.vim', { 'for': 'rust' } "Rust
-Plug 'racer-rust/vim-racer', { 'for': 'rust' } "Racer (Rust Auto-CompletER)
-Plug 'othree/xml.vim' "XML
-Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
-Plug 'pangloss/vim-javascript' "JS
-Plug 'StanAngeloff/php.vim' "PHP
-Plug 'niklasl/vim-rdf', { 'for': 'rdf' } "RDF
-Plug 'lervag/vimtex' "TeX
 "}}}
 
 call plug#end()
