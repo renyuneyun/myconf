@@ -158,7 +158,16 @@ endif
 
 "代碼補全與分析{{{
 
-if (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM 要求Vim 7.3.584+ & CMake
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plug 'Shougo/deoplete-clangx' "C-family languages
+	Plug 'davidhalter/jedi', { 'for': 'python' } "Python
+	Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } "依賴jedi
+	if executable("go")
+	  Plug 'stamblerre/gocode', { 'for': 'go' } "Golang
+	  Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'} "依賴gocode
+	endif
+elseif (v:version > 703 || v:version == 703 && has("patch584")) && executable("cmake") "YCM 要求Vim 7.3.584+ & CMake
 	Plug 'Valloric/YouCompleteMe' "代碼補全
 else "不使用YCM的代碼補全
 	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
@@ -181,8 +190,8 @@ endif
 "諸語言{{{
 Plug 'fatih/vim-go', { 'for': 'go' } "Go
 Plug 'plytophogy/vim-virtualenv', { 'for': 'python', 'on': ['VirtualEnvList', 'VirtualEnvActivate'] } "VirtuelEnv support for vim
-Plug 'rust-lang/rust.vim' "Rust
-Plug 'racer-rust/vim-racer' "Racer (Rust Auto-CompletER)
+Plug 'rust-lang/rust.vim', { 'for': 'rust' } "Rust
+Plug 'racer-rust/vim-racer', { 'for': 'rust' } "Racer (Rust Auto-CompletER)
 Plug 'othree/xml.vim' "XML
 Plug 'vim-scripts/html5.vim' "HTML5 + inline SVG
 Plug 'pangloss/vim-javascript' "JS
@@ -239,6 +248,11 @@ endif "}}}
 if HasPlugin("ultisnips") "{{{
 	let g:UltiSnipsEditSplit="vertical"
 	let g:UltiSnipsExpandTrigger="<A-a>"
+endif "}}}
+
+if HasPlugin("deoplete.nvim") "{{{
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#sources#jedi#show_docstring = 1
 endif "}}}
 
 if HasPlugin("YouCompleteMe") "{{{
