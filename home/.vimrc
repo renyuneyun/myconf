@@ -65,7 +65,7 @@ function! CleverTab()
 	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
 		return "\<Tab>"
 	else
-		return "\<C-P>"
+		return "\<C-n>"
 	endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
@@ -81,10 +81,8 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 "1}}}
 
 "vimrc輔助函數{{{1
-let s:plugin_dir = glob("~/.vim/plugged")
 function! HasPlugin(name)
-	let dir_name = s:plugin_dir . "/" . a:name
-	return isdirectory(dir_name) && !empty(dir_name)
+	return has_key(g:plugs, a:name)
 endfunction
 "1}}}
 
@@ -140,7 +138,7 @@ endif
 "編程·通用功能{{{
 Plug 'tpope/vim-surround' "編輯環繞符號
 Plug 'tpope/vim-commentary' "註釋代碼
-Plug 'Raimondi/delimitMate' "括號等自動補全
+Plug 'jiangmiao/auto-pairs' "括號自動配對及更多舒適操作
 
 Plug 'tpope/vim-sleuth' "自動探測縮進
 
