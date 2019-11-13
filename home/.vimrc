@@ -95,6 +95,9 @@ endif
 call plug#begin()
 
 "Vim表現{{{
+Plug 'thaerkh/vim-workspace' "Workspace
+Plug 'mhinz/vim-startify' "起始頁面
+
 "Plug 'xolox/vim-misc'
 "Plug 'xolox/vim-session'
 Plug 'asins/vimcdoc' "vim中文幫助文檔
@@ -104,7 +107,8 @@ if executable("fcitx") "fcitx自動切換{{{
 	"Plug 'vim-scripts/fcitx.vim'
 endif "}}}
 
-Plug 'fholgado/minibufexpl.vim' "mini Buffer Explorer
+Plug 'ryanoasis/vim-devicons' "爲許多插件增加文件類型圖標
+
 Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } "file browser
@@ -132,6 +136,10 @@ if executable("ctags") "TagHighlight
 	Plug 'abudden/taghighlight-automirror'
 	"Plug 'https://bitbucket.org/abudden/taghighlight' " in mercurial, can't be managed by vim-plug
 	"Plug 'bandit.vim'
+endif
+
+if v:version > 704 || v:version == 704 && has("patch774")
+	Plug 'Shougo/echodoc.vim' "在echo area顯示文檔（簽名）
 endif
 "}}}
 
@@ -214,14 +222,14 @@ if HasPlugin("fcitx.vim") "{{{
 	set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
 endif "}}}
 
-if HasPlugin("minibufexpl.vim") "{{{
-	"用CTRL-TAB遍歷buffer
-	noremap <C-TAB>   :MBEbn<CR>
-	noremap <C-S-TAB> :MBEbp<CR>
-endif "}}}
-
 if HasPlugin("vim-airline") "{{{
 	set laststatus=2 "始終顯示狀態行，以顯示vim-airline
+	let g:airline#extensions#tabline#enabled = 1
+	let g:airline#extensions#tabline#buffer_min_count = 2
+	let g:airline#extensions#tabline#buffer_nr_show = 1
+	"用CTRL-TAB遍歷buffer
+	nnoremap <C-tab> :bn<CR>
+	nnoremap <C-s-tab> :bp<CR>
 endif "}}}
 
 if HasPlugin("rainbow") "{{{
@@ -255,9 +263,32 @@ if HasPlugin("ultisnips") "{{{
 	let g:UltiSnipsExpandTrigger="<A-a>"
 endif "}}}
 
+if HasPlugin("vim-workspace") "{{{
+	let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+	let g:workspace_autosave_ignore = ['gitcommit', '.gitignore']
+	nnoremap <leader>s :ToggleWorkspace<CR>
+endif "}}}
+
+if HasPlugin("echodoc.vim") "{{{
+	let g:echodoc#enable_at_startup = 1
+	if HasPlugin("vim-airline")
+		set noshowmode
+	elseif has('nvim')
+		let g:echodoc#type = 'virtual'
+		"let g:echodoc#type = 'floating'
+		"highlight link EchoDocFloat Pmenu
+	else
+		set cmdheight=2
+	endif
+endif "}}}
+
 if HasPlugin("deoplete.nvim") "{{{
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#sources#jedi#show_docstring = 1
+endif "}}}
+
+if HasPlugin("vim-racer") "{{{
+	let g:racer_experimental_completer = 1
 endif "}}}
 
 if HasPlugin("YouCompleteMe") "{{{
