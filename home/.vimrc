@@ -9,9 +9,9 @@ set nocompatible
 
 "外觀設置（字體，主體）{{{2
 if has('nvim')
-	set guifont=Fira\ Code:h16
+	"Guifont! Fira\ Code\ Medium:h16 "Done in `ginit.vim`
 else
-	set guifont=Fira\ Code\ 16,Monaco\ 16,DejaVu\ Sans\ Mono\ 16
+	set guifont=FuraCode\ Nerd\ Font\ 16,Fira\ Code\ 16,Monaco\ 16,DejaVu\ Sans\ Mono\ 16
 endif
 colorscheme evening
 "2}}}
