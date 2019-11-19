@@ -46,7 +46,7 @@ f_fzf_z=/home/ryey/vcs/fzf-z/fzf-z.plugin.zsh
 
 # powerline {{{
 TTY=`tty`
-plscript='/usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh'
+plscript='/usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh'
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
 
