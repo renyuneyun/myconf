@@ -62,6 +62,13 @@ theme.titlebar_bg_normal = "#3F3F3F"
 --theme.bg_widget        = "#494B4F"
 --theme.border_widget    = "#3F3F3F"
 -- }}}
+theme.color = {
+    mem_widget = {
+        "#B1DCEC",
+        "#5F99C1",
+        "#39546F",
+    },
+}
 
 -- {{{ Mouse finder
 theme.mouse_finder_color = "#CC9393"

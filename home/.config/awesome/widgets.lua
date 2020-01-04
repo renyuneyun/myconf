@@ -85,13 +85,15 @@ awful.button({ }, 5, function () awful.util.spawn("mpc volume -5") end)
 local memicon = wibox.widget.imagebox(theme.widget_mem)
 local mem = lain.widget.mem({
     settings = function()
-        widget.value = mem_now.perc
+        widget.max_value = mem_now.total
+        widget.values = {mem_now.used, mem_now.buf, mem_now.cache}
     end
 })
 mem.widget = wibox.widget {
     min_value = 0,
     max_value = 100,
     thickness = 4,
+    colors = theme.color.mem_widget,
     widget = wibox.container.arcchart
 }
 memwidget = wibox.widget {
