@@ -10,7 +10,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-require('freedesktop.utils')
+local freedesktop = require('freedesktop')
 
 
 -- {{{ Error handling
@@ -46,9 +46,6 @@ beautiful.init(awful.util.getdir("config") .. "/theme/theme.lua")
 terminal = "terminator"
 editor = os.getenv("EDITOR") or "gvim"
 editor_cmd = terminal .. " -x " .. editor
-
-freedesktop.utils.terminal = terminal  -- default: "xterm"
-freedesktop.utils.icon_theme = 'breeze' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -96,9 +93,7 @@ end
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 
-require('freedesktop.menu')
-
-free_desktop_menu_items = freedesktop.menu.new()
+free_desktop_menu_items = freedesktop.menu.build()
 
 myawesomemenu = {
    { "熱鍵hotkeys", function() return false, hotkeys_popup.show_help end},
