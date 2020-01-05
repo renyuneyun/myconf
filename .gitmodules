@@ -1,6 +1,6 @@
 [submodule "home/.config/awesome/third_party/awesome-freedesktop"]
 	path = home/.config/awesome/third_party/awesome-freedesktop
-	url = https://github.com/terceiro/awesome-freedesktop.git
+	url = https://github.com/lcpz/awesome-freedesktop.git
 [submodule "home/.config/awesome/third_party/lain"]
 	path = home/.config/awesome/third_party/lain
 	url = https://github.com/copycat-killer/lain.git
