@@ -102,6 +102,25 @@ memwidget = wibox.widget {
     layout = wibox.layout.stack
 }
 
+local swapicon = wibox.widget.imagebox(theme.widget_swap)
+local swap = lain.widget.mem({
+    settings = function()
+        widget.max_value = mem_now.swap
+        widget.values = {mem_now.srec, mem_now.swapused - mem_now.srec}
+    end
+})
+swap.widget = wibox.widget {
+    min_value = 0,
+    thickness = 4,
+    colors = theme.color.swap_widget,
+    widget = wibox.container.arcchart
+}
+swapwidget = wibox.widget {
+    swapicon,
+    swap.widget,
+    layout = wibox.layout.stack
+}
+
 -- CPU
 local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local cpu = lain.widget.cpu({

@@ -129,6 +129,7 @@ function setup_left_panel(taglist_buttons)
                 isystray,
                 cpuwidget,
                 memwidget,
+                swapwidget,
             },
         }
     end)

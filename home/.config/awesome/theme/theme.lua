@@ -68,6 +68,11 @@ theme.color = {
         "#5F99C1",
         "#39546F",
     },
+    swap_widget = {
+        "#FBBD03",
+        "#42B361",
+        "#C7C456",
+    },
 }
 
 -- {{{ Mouse finder
@@ -151,6 +156,7 @@ theme.widget_battery                            = theme.dir2 .. "/icons/battery.
 theme.widget_battery_low                        = theme.dir2 .. "/icons/battery_low.png"
 theme.widget_battery_empty                      = theme.dir2 .. "/icons/battery_empty.png"
 theme.widget_mem                                = theme.dir2 .. "/icons/mem.png"
+theme.widget_swap                               = theme.dir2 .. "/icons/mem.png"
 theme.widget_cpu                                = theme.dir2 .. "/icons/cpu.png"
 theme.widget_temp                               = theme.dir2 .. "/icons/temp.png"
 theme.widget_net                                = theme.dir2 .. "/icons/net.png"
