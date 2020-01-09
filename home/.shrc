@@ -19,6 +19,15 @@ alias ll='ls -l'
 alias grep='grep --color'
 
 alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd..3='cd ../../..'
+# Go upwards for N levels (e.g. `up 3`)
+up() {
+  for D in $(seq 1 $1);
+     do
+       cd ..
+     done
+}
 
 alias vim='env -u PYTHONPATH vim'
 
@@ -31,6 +40,10 @@ alias dicelogin='ssh -t dice ssh -t student.login'
 alias dicecompute='ssh -t dice ssh -t student.login ssh -t student.compute'
 
 alias closelcd="xset dpms force off"
+
+F="$HOME/.todo/config-food" && [ -f "$F" ] && alias todo-food="todo.sh -d \"$F\"" && unset F
+
+command -v thefuck &>/dev/null && eval $(thefuck --alias)
 
 # virtualenvwrapper
 f_vw=/usr/bin/virtualenvwrapper_lazy.sh

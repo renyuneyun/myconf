@@ -49,17 +49,3 @@ TTY=`tty`
 plscript='/usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh'
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
-
-hash thefuck &>/dev/null && eval $(thefuck --alias)
-
-export VENV_LOCATION=$HOME/venvs
-function venv {
-	env_name=$1
-	env_dir=$VENV_LOCATION/$env_name
-	if [ -d $env_dir ]; then
-		source $env_dir/bin/activate
-	else
-		echo Virtual Environment $env_name doesn\'t exist
-	fi
-}
-
