@@ -106,7 +106,7 @@ local swapicon = wibox.widget.imagebox(theme.widget_swap)
 local swap = lain.widget.mem({
     settings = function()
         widget.max_value = mem_now.swap
-        widget.values = {mem_now.srec, mem_now.swapused - mem_now.srec}
+        widget.values = {mem_now.swapused}
     end
 })
 swap.widget = wibox.widget {
