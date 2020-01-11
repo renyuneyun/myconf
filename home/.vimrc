@@ -128,7 +128,7 @@ endif
 if v:version >= 703
 	Plug 'Yggdroot/indentLine' "縮進對齊豎線
 endif
-Plug 'ap/vim-css-color' "CSS顏色顯示
+Plug 'chrisbra/Colorizer' "顏色代碼顯示
 Plug 'luochen1990/rainbow' "Rainbow Parentheses
 Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
 if executable("ctags") "TagHighlight
@@ -176,7 +176,7 @@ Plug 'lervag/vimtex' "TeX
 
 "編程·自動補全與分析{{{
 
-"自動補全框架及框架相關{{{1
+"自動補全框架及框架相關{{{
 if has('nvim') "deoplete爲neovim開發 TODO: 加入vim 8下的deoplete
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'Shougo/deoplete-clangx' "C-family languages
@@ -192,13 +192,13 @@ else "不使用框架的自動補全
 	Plug 'davidhalter/jedi' "Python用代碼補全（由jedi-vim調用）
 	Plug 'davidhalter/jedi-vim' "Python代碼補全（無YCM）
 endif
-"1}}}
+"}}}
 
-"各框架下的自動補全{{{1
+"各框架下的自動補全{{{
 if executable('racer')
 	Plug 'racer-rust/vim-racer', { 'for': 'rust' } "Racer (Rust Auto-CompletER)
 endif
-"1}}}
+"}}}
 
 if executable("ctags")
 	if has('nvim') || v:version > 800
@@ -230,6 +230,10 @@ if HasPlugin("vim-airline") "{{{
 	"用CTRL-TAB遍歷buffer
 	nnoremap <C-tab> :bn<CR>
 	nnoremap <C-s-tab> :bp<CR>
+endif "}}}
+
+if HasPlugin("Colorizer") "{{{
+	:let g:colorizer_auto_filetype='css,html,lua'
 endif "}}}
 
 if HasPlugin("rainbow") "{{{
