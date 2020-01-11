@@ -66,7 +66,7 @@ theme.color = {
     mem_widget = {
         "#B1DCEC",
         "#5F99C1",
-        "#39546F",
+        "#3C7CA6",
     },
     swap_widget = {
         "#FBBD03",
