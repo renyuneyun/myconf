@@ -94,8 +94,6 @@ end
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 
-free_desktop_menu_items = freedesktop.menu.build()
-
 myawesomemenu = {
    { "熱鍵hotkeys", function() return false, hotkeys_popup.show_help end},
    { "手冊 (&M)", terminal .. " -x man awesome" },
@@ -104,14 +102,17 @@ myawesomemenu = {
    { "註銷 (&L)", function() awesome.quit() end}
 }
 
-mymainmenu = awful.menu({ items = {
-          { "程序 (&P)", free_desktop_menu_items },
-          { "awesome (&A)", myawesomemenu, beautiful.awesome_icon },
-          { "終端 (&T)", terminal },
-          { "掛起 (&S)", "systemctl suspend" },
-          { "關機 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-cancel --timeout 30 && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
-                                  }
-                        })
+mymainmenu = freedesktop.menu.build({
+   before = {
+      { "awesome (&A)", myawesomemenu, beautiful.awesome_icon },
+   },
+   after = {
+      { "終端 (&T)", terminal },
+      { "鎖定 (&L)", "xscreensaver-command -lock" },
+      { "掛起 (&S)", "systemctl suspend" },
+      { "關機 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-cancel --timeout 30 && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+   }
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
