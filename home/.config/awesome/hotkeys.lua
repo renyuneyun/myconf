@@ -211,4 +211,9 @@ local clientkeys = awful.util.table.join(
         {description = "maximize", group = "client"})
 )
 
-return {globalkeys, clientkeys}
+hotkeys = {
+    global = globalkeys,
+    client = clientkeys,
+}
+
+return hotkeys
