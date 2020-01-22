@@ -1,4 +1,5 @@
 local awful = require("awful")
+
 local clientkeys = require("hotkeys").client
 
 local clientbuttons = awful.util.table.join(

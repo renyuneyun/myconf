@@ -1,5 +1,6 @@
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local menubar = require("menubar")
 
 modkey = "Mod4"
 

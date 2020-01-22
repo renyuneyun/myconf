@@ -1,11 +1,13 @@
 local awful = require("awful")
+-- Widget and layout library
 local wibox = require("wibox")
 local common = require("awful.widget.common")
 local beautiful = require("beautiful")
-require("widgets")
 
 local theme = require("theme.theme")
 local dpi = require("theme.utils").dpi
+
+require("widgets")
 
 theme.panels = {
     top_height = dpi(24),
