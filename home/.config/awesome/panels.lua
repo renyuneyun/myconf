@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local common = require("awful.widget.common")
+local beautiful = require("beautiful")
 require("widgets")
 
 local theme = require("theme.theme")
@@ -13,6 +14,23 @@ theme.panels = {
         dpi(6), dpi(0), dpi(2), dpi(2),
     },
 }
+
+panels = {}
+
+-- {{{ Helper functions
+local function client_menu_toggle_fn()
+    local instance = nil
+
+    return function ()
+        if instance and instance.wibox.visible then
+            instance:hide()
+            instance = nil
+        else
+            instance = awful.menu.clients()
+        end
+    end
+end
+-- }}}
 
 local function vert_list_update(w, buttons, label, data, objects)
     -- update the widgets, creating them if needed
@@ -65,12 +83,33 @@ local function vert_list_update(w, buttons, label, data, objects)
     end
 end
 
-function setup_panels(taglist_buttons, tasklist_buttons)
-    setup_top_panel(tasklist_buttons)
-    setup_left_panel(taglist_buttons)
-end
+function panels.setup_top_panel()
 
-function setup_top_panel(tasklist_buttons)
+    local tasklist_buttons = awful.util.table.join(
+                         awful.button({ }, 1, function (c)
+                                                  if c == client.focus then
+                                                      c.minimized = true
+                                                  else
+                                                      -- Without this, the following
+                                                      -- :isvisible() makes no sense
+                                                      c.minimized = false
+                                                      if not c:isvisible() and c.first_tag then
+                                                          c.first_tag:view_only()
+                                                      end
+                                                      -- This will also un-minimize
+                                                      -- the client, if needed
+                                                      client.focus = c
+                                                      c:raise()
+                                                  end
+                                              end),
+                         awful.button({ }, 3, client_menu_toggle_fn()),
+                         awful.button({ }, 4, function ()
+                                                  awful.client.focus.byidx(1)
+                                              end),
+                         awful.button({ }, 5, function ()
+                                                  awful.client.focus.byidx(-1)
+                                              end))
+
     awful.screen.connect_for_each_screen(function(s)
         -- Create a promptbox for each screen
         s.mypromptbox = awful.widget.prompt()
@@ -94,7 +133,7 @@ function setup_top_panel(tasklist_buttons)
             layout = wibox.layout.align.horizontal,
             { -- Left widgets
                 layout = wibox.layout.fixed.horizontal,
-                mylauncher,
+                panels.mylauncher,
                 s.mypromptbox,
             },
             s.mytasklist, -- Middle widget
@@ -117,7 +156,25 @@ function setup_top_panel(tasklist_buttons)
 end
 
 
-function setup_left_panel(taglist_buttons)
+function panels.setup_left_panel(taglist_buttons)
+    -- Create a wibox for each screen and add it
+    local taglist_buttons = awful.util.table.join(
+                        awful.button({ }, 1, function(t) t:view_only() end),
+                        awful.button({ modkey }, 1, function(t)
+                                                  if client.focus then
+                                                      client.focus:move_to_tag(t)
+                                                  end
+                                              end),
+                        awful.button({ }, 3, awful.tag.viewtoggle),
+                        awful.button({ modkey }, 3, function(t)
+                                                  if client.focus then
+                                                      client.focus:toggle_tag(t)
+                                                  end
+                                              end),
+                        awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+                        awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+                    )
+
     local isystray = wibox.widget.systray()
     isystray:set_horizontal(false)
 
@@ -146,3 +203,12 @@ function setup_left_panel(taglist_buttons)
     end)
 end
 
+function panels.setup(mymainmenu)
+    panels.mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                         menu = mymainmenu })
+
+    panels.setup_top_panel()
+    panels.setup_left_panel()
+end
+
+return panels
