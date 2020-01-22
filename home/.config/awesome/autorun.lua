@@ -21,4 +21,3 @@ run_once("numlockx")
 run_once("powerline-daemon")
 run_once("kdeconnect-indicator")
 run_once("albert")
-

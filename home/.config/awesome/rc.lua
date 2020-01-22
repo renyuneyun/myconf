@@ -12,6 +12,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local freedesktop = require('freedesktop')
 
+local theme = require("theme.theme")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -40,7 +41,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(awful.util.getdir("config") .. "/theme/theme.lua")
+beautiful.init(theme) -- awful.util.getdir("config") .. "/theme/theme.lua"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -84,7 +85,7 @@ local function client_menu_toggle_fn()
             instance:hide()
             instance = nil
         else
-            instance = awful.menu.clients({ theme = { width = 250 } })
+            instance = awful.menu.clients()
         end
     end
 end

@@ -3,6 +3,17 @@ local wibox = require("wibox")
 local common = require("awful.widget.common")
 require("widgets")
 
+local theme = require("theme.theme")
+local dpi = require("theme.utils").dpi
+
+theme.panels = {
+    top_height = dpi(24),
+    left_width = dpi(26),
+    taglist_margin = {
+        dpi(6), dpi(0), dpi(2), dpi(2),
+    },
+}
+
 local function vert_list_update(w, buttons, label, data, objects)
     -- update the widgets, creating them if needed
     w:reset()
@@ -18,7 +29,7 @@ local function vert_list_update(w, buttons, label, data, objects)
             ib = wibox.widget.imagebox()
             tb = wibox.widget.textbox()
             bgb = wibox.container.background()
-            m = wibox.container.margin(tb, 12, 4)
+            m = wibox.container.margin(tb, table.unpack(theme.panels.taglist_margin))
             l = wibox.layout.fixed.vertical()
 
             -- All of this is added in a fixed widget
@@ -76,7 +87,7 @@ function setup_top_panel(tasklist_buttons)
         s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
         -- Create the wibox
-        s.mywibox = awful.wibar({ position = "top", screen = s, height=26 })
+        s.mywibox = awful.wibar({ position = "top", screen = s, height=theme.panels.top_height })
 
         -- Add widgets to the wibox
         s.mywibox:setup {
@@ -114,7 +125,7 @@ function setup_left_panel(taglist_buttons)
         -- Create a taglist widget
         s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons, nil, vert_list_update, wibox.layout.fixed.vertical())
 
-        s.mywibox_left = awful.wibar({ position = "left", screen = s, width = 40 })
+        s.mywibox_left = awful.wibar({ position = "left", screen = s, width = theme.panels.left_width })
         s.mywibox_left:setup {
             layout = wibox.layout.align.vertical,
             { -- Top widgets

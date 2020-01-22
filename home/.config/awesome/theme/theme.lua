@@ -4,6 +4,8 @@
 --    By Adrian C. (anrxc)   --
 -------------------------------
 
+local dpi = require("theme.utils").dpi
+
 -- {{{ Main
 local theme = {}
 theme.dir = require("awful").util.getdir("config") .. "/theme"
@@ -17,7 +19,7 @@ end
 -- }}}
 
 -- {{{ Styles
-theme.font      = "Oxygen Sans 12"
+theme.font      = "Oxygen Sans " .. dpi(8)
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
@@ -31,7 +33,7 @@ theme.bg_systray = theme.bg_normal
 
 -- {{{ Borders
 theme.useless_gap   = 0
-theme.border_width  = 2
+theme.border_width  = dpi(2)
 theme.border_normal = "#3F3F3F"
 theme.border_focus  = "#6F6F6F"
 theme.border_marked = "#CC9393"
@@ -84,8 +86,8 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = 28
-theme.menu_width  = 256
+theme.menu_height = dpi(28)
+theme.menu_width  = dpi(256)
 -- }}}
 
 -- {{{ Icons
