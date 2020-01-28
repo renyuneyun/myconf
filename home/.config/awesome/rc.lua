@@ -11,6 +11,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 local freedesktop = require('freedesktop')
 
 local theme = require("theme.theme")
+local cmds = require("commands")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -91,9 +92,9 @@ mymainmenu = freedesktop.menu.build({
    },
    after = {
       { "終端 (&T)", terminal },
-      { "鎖定 (&L)", "xscreensaver-command -lock" },
-      { "掛起 (&S)", "systemctl suspend" },
-      { "關機 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-cancel --timeout 30 && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+      { "鎖定 (&L)", cmds.lock },
+      { "掛起 (&S)", cmds.hangup },
+      { "關機 (&H)", cmds.shutdown, '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
    }
 })
 
