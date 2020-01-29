@@ -19,7 +19,8 @@ end
 -- }}}
 
 -- {{{ Styles
-theme.font      = "Oxygen Sans " .. dpi(8)
+theme.font      = "Source Han Sans CN " .. dpi(8)
+theme.font_mono = "DejaVu Sans Mono " .. dpi(8)
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"

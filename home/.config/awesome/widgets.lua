@@ -43,7 +43,7 @@ mytextclock = wibox.widget.textclock(" %m月%d日 %H:%M:%S %a ", 1)
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
-        font = "xos4 Terminus 10",
+        font = theme.font_mono,
         fg   = theme.fg_normal,
         bg   = theme.bg_normal
     }
@@ -157,7 +157,7 @@ tempwidget = wibox.widget {
 local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 theme.fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "xos4 Terminus 10" },
+    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = theme.font_mono },
     settings = function()
         local color = pp_rgb(theme.fg_normal, 100-fs_now["/"].percentage)
         widget:set_markup(markup.font(theme.font, string.format(" <span color=\"%s\">%d</span>%% ", color, fs_now["/"].percentage)))
