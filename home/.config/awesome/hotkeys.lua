@@ -9,6 +9,10 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
 
+    awful.key({ modkey, "Shift"   }, "Return", function ()
+        awful.spawn("rofi -show combi") end,
+              {description = "open a terminal", group = "launcher"}),
+
 -- {{{guhua
 --    awful.key({ modkey }, "l", function () awful.util.spawn("slimlock") end),
     -- Brightness

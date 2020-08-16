@@ -45,6 +45,7 @@ function floating_clients(beautiful)
                 ,"Gvim"
                 ,"Skype"
                 ,"Wire"
+                ,"scrcpy"
             },
 
             name = {
@@ -57,6 +58,14 @@ function floating_clients(beautiful)
         }, properties = { floating = true }
     }
 end
+
+local rule_self_managed_floating = {
+    titlebars_enabled = false,
+    floating = true,
+    size_hints_honor = true,
+    border_width = 0,
+    placement = awful.placement.no_offscreen,
+}
 
 client_rules = {}
 
@@ -74,8 +83,20 @@ function client_rules.rules(beautiful)
         -- Set Firefox to always map on the tag named "2" on screen 1.
         -- { rule = { class = "Firefox" },
         --   properties = { screen = 1, tag = "2" } },
-        { rule = { class = "Wire" },
-    properties = { tag = awful.screen.focused().tags[-1] } },
+        {
+            rule = { class = "Wire" },
+            properties = { tag = awful.screen.focused().tags[-1] }
+        },
+        {
+            rule = { class = "wechat.exe" },
+            properties = rule_self_managed_floating
+        },
+        {
+            -- rule = { name = "QQ" },
+            -- rule = { class = "qq.exe" },
+            rule = { class = "Wine" },
+            properties = rule_self_managed_floating
+        },
     }
 end
 

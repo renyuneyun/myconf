@@ -101,11 +101,21 @@ memwidget = wibox.widget {
     mem.widget,
     layout = wibox.layout.stack
 }
+memwidget:buttons(awful.util.table.join(
+awful.button({ }, 1, function () awful.spawn.easy_async("sudo sysctl vm/drop_caches=3",
+    function (stdout, stderr, exitreason, exitcode) end
+        )
+    end)
+))
 
 local swapicon = wibox.widget.imagebox(theme.widget_swap)
 local swap = lain.widget.mem({
     settings = function()
-        widget.max_value = mem_now.swap
+        if mem_now.swap > 0 then
+            widget.max_value = mem_now.swap
+        else
+            widget.max_value = 1
+        end
         widget.values = {mem_now.swapused}
     end
 })
@@ -156,7 +166,8 @@ tempwidget = wibox.widget {
 -- / fs
 local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 theme.fs = lain.widget.fs({
-    options  = "--exclude-type=tmpfs",
+    timeout  = 2,
+    options  = "--exclude-type=tmpfs --exclude-type=nfs4 --exclude-type=autofs",
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = theme.font_mono },
     settings = function()
         local color = pp_rgb(theme.fg_normal, 100-fs_now["/"].percentage)
