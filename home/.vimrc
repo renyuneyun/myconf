@@ -4,82 +4,6 @@ else
 	let g:isunix=1
 endif
 
-"基本設置{{{1
-set nocompatible
-
-"外觀設置（字體，主體）{{{2
-if has('nvim')
-	"Guifont! Fira\ Code\ Medium:h16 "Done in `ginit.vim`
-else
-	set guifont=FuraCode\ Nerd\ Font\ 16,Fira\ Code\ 16,Monaco\ 16,DejaVu\ Sans\ Mono\ 16
-endif
-colorscheme evening
-"2}}}
-
-"編碼，換行設置{{{2
-set encoding=utf-8 "vim內部編碼
-set fileencodings=utf-8,gb18030,big5 "讀取文件編碼嘗試
-set fileencoding=utf-8 "保存文件編碼
-set termencoding=utf-8
-set fileformats=unix
-"2}}}
-
-"跳轉到上次位置{{{2
-if has("autocmd")
- au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-"2}}}
-
-"顯示設置{{{2
-set colorcolumn=80 "80列豎線
-set cursorline "高亮當前行
-set cursorcolumn "高亮當前列
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set listchars=tab:>-,trail:-
-set list "顯示空白
-set nu "行號
-set foldlevelstart=2
-"2}}}
-
-"set autoindent
-"set cindent
-
-"FileType{{{
-syntax enable
-filetype plugin indent on
-"}}}
-
-"外部工具{{{
-set cscopetag                  " 使用 cscope 作为 tags 命令
-set cscopeprg='gtags-cscope'   " 使用 gtags-cscope 代替 cscope
-"}}}
-
-"1}}}
-
-"功能定製{{{1
-
-"CleverTab 自lilydjwg{{{
-function! CleverTab()
-	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-		return "\<Tab>"
-	else
-		return "\<C-n>"
-	endif
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
-"}}}
-
-"修改變量名 自http://stackoverflow.com/questions/597687/changing-variable-names-in-vim {{{
-"For local replace
-nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
-
-"For global replace
-nnoremap gR gD:%s/<C-R>///gc<left><left><left>
-"}}}
-"1}}}
-
 "vimrc輔助函數{{{1
 function! HasPlugin(name)
 	return has_key(g:plugs, a:name)
@@ -128,6 +52,9 @@ endif
 if v:version >= 703
 	Plug 'Yggdroot/indentLine' "縮進對齊豎線
 endif
+
+Plug 'sainnhe/sonokai' "配色方案
+
 Plug 'chrisbra/Colorizer' "顏色代碼顯示
 Plug 'luochen1990/rainbow' "Rainbow Parentheses
 Plug 'jaxbot/semantic-highlight.vim', { 'on': 'SemanticHighlight' }
@@ -217,6 +144,88 @@ call plug#end()
 filetype plugin indent on
 "1}}}
 
+"基本設置{{{1
+set nocompatible
+
+"外觀設置（字體，主體）{{{2
+if has('nvim')
+	"Guifont! Fira\ Code\ Medium:h16 "Done in `ginit.vim`
+else
+	set guifont=FuraCode\ Nerd\ Font\ 16,Fira\ Code\ 16,Monaco\ 16,DejaVu\ Sans\ Mono\ 16
+endif
+
+if has('termguicolors')
+	set termguicolors
+endif
+if !HasPlugin('sonokai') "If has sonokai, then use sonokai (requires configuration, see below)
+	colorscheme evening
+endif
+"2}}}
+
+"編碼，換行設置{{{2
+set encoding=utf-8 "vim內部編碼
+set fileencodings=utf-8,gb18030,big5 "讀取文件編碼嘗試
+set fileencoding=utf-8 "保存文件編碼
+set termencoding=utf-8
+set fileformats=unix
+"2}}}
+
+"跳轉到上次位置{{{2
+if has("autocmd")
+ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+"2}}}
+
+"顯示設置{{{2
+set colorcolumn=80 "80列豎線
+set cursorline "高亮當前行
+set cursorcolumn "高亮當前列
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set listchars=tab:>-,trail:-
+set list "顯示空白
+set nu "行號
+set foldlevelstart=2
+"2}}}
+
+"set autoindent
+"set cindent
+
+"FileType{{{
+syntax enable
+filetype plugin indent on
+"}}}
+
+"外部工具{{{
+set cscopetag                  " 使用 cscope 作为 tags 命令
+set cscopeprg='gtags-cscope'   " 使用 gtags-cscope 代替 cscope
+"}}}
+
+"1}}}
+
+"功能定製{{{1
+
+"CleverTab 自lilydjwg{{{
+function! CleverTab()
+	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<Tab>"
+	else
+		return "\<C-n>"
+	endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+"}}}
+
+"修改變量名 自http://stackoverflow.com/questions/597687/changing-variable-names-in-vim {{{
+"For local replace
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
+
+"For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+"}}}
+"1}}}
+
 "通常插件配置{{{1
 if HasPlugin("fcitx.vim") "{{{
 	set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
@@ -230,6 +239,13 @@ if HasPlugin("vim-airline") "{{{
 	"用CTRL-TAB遍歷buffer
 	nnoremap <C-tab> :bn<CR>
 	nnoremap <C-s-tab> :bp<CR>
+endif "}}}
+
+if HasPlugin("sonokai") "{{{
+	let g:sonokai_style = 'atlantis'
+	let g:sonokai_enable_italic = 1
+	let g:sonokai_disable_italic_comment = 1
+	colorscheme sonokai
 endif "}}}
 
 if HasPlugin("Colorizer") "{{{
@@ -284,6 +300,10 @@ if HasPlugin("echodoc.vim") "{{{
 	else
 		set cmdheight=2
 	endif
+endif "}}}
+
+if HasPlugin('vimtex') "{{{
+	let g:tex_flavor = 'latex'
 endif "}}}
 
 if HasPlugin("deoplete.nvim") "{{{
@@ -426,59 +446,59 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
 nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 function! Do_CsTag()
-    let dir = getcwd()
-    if filereadable("tags")
-        if (g:isunix == 1)
-            let tagsdeleted = delete("./"."tags")
-        else
-            let tagsdeleted = delete(dir."\\"."tags")
-        endif
-        if (tagsdeleted != 0)
-            echohl WarningMsg | echo "Fail to do tags! Cannot delete the tags" | echohl None
-            return
-        endif
-    endif
-    if has("cscope")
-        silent! execute "cs kill -1"
-    endif
-    if filereadable("cscope.files")
-        if (g:isunix == 1)
-            let csfilesdeleted = delete("./"."cscope.files")
-        else
-            let csfilesdeleted = delete(dir."\\"."cscope.files")
-        endif
-        if (csfilesdeleted != 0)
-            echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.files" | echohl None
-            return
-        endif
-    endif
-    if filereadable("cscope.out")
-        if (g:isunix == 1)
-            let csoutdeleted = delete("./"."cscope.out")
-        else
-            let csoutdeleted = delete(dir."\\"."cscope.out")
-        endif
-        if (csoutdeleted != 0)
-            echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.out" | echohl None
-            return
-        endif
-    endif
-    if (executable('ctags'))
-        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
-        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    endif
-    if (executable('cscope') && has('cscope'))
-        if (g:isunix == 1)
-            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-        else
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-        endif
-        silent! execute "!cscope -b"
-        execute "normal :"
-        if filereadable("cscope.out")
-            execute "cs add cscope.out"
-        endif
-    endif
+	let dir = getcwd()
+	if filereadable("tags")
+		if (g:isunix == 1)
+			let tagsdeleted = delete("./"."tags")
+		else
+			let tagsdeleted = delete(dir."\\"."tags")
+		endif
+		if (tagsdeleted != 0)
+			echohl WarningMsg | echo "Fail to do tags! Cannot delete the tags" | echohl None
+			return
+		endif
+	endif
+	if has("cscope")
+		silent! execute "cs kill -1"
+	endif
+	if filereadable("cscope.files")
+		if (g:isunix == 1)
+			let csfilesdeleted = delete("./"."cscope.files")
+		else
+			let csfilesdeleted = delete(dir."\\"."cscope.files")
+		endif
+		if (csfilesdeleted != 0)
+			echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.files" | echohl None
+			return
+		endif
+	endif
+	if filereadable("cscope.out")
+		if (g:isunix == 1)
+			let csoutdeleted = delete("./"."cscope.out")
+		else
+			let csoutdeleted = delete(dir."\\"."cscope.out")
+		endif
+		if (csoutdeleted != 0)
+			echohl WarningMsg | echo "Fail to do cscope! Cannot delete the cscope.out" | echohl None
+			return
+		endif
+	endif
+	if (executable('ctags'))
+		"silent! execute "!ctags -R --c-types=+p --fields=+S *"
+		silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+	endif
+	if (executable('cscope') && has('cscope'))
+		if (g:isunix == 1)
+			silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+		else
+			silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+		endif
+		silent! execute "!cscope -b"
+		execute "normal :"
+		if filereadable("cscope.out")
+			execute "cs add cscope.out"
+		endif
+	endif
 endfunction
 "1}}}
 
