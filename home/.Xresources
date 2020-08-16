@@ -1,4 +1,9 @@
+#if SCREEN_NUM == 0
 Xft.dpi: 141
+#endif
+#if SCREEN_NUM == 1
+Xft.dpi: 96
+#endif
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
