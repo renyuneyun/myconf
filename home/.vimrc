@@ -31,6 +31,8 @@ if executable("fcitx") "fcitx自動切換{{{
 	"Plug 'vim-scripts/fcitx.vim'
 endif "}}}
 
+Plug 'farmergreg/vim-lastplace' "索回最後的光標位置
+
 Plug 'ryanoasis/vim-devicons' "爲許多插件增加文件類型圖標
 
 Plug 'bling/vim-airline' "高級vim狀態欄（可和許多插件集成）
@@ -87,6 +89,8 @@ if has("python") || has("python3") || has("python2")
 	Plug 'honza/vim-snippets'
 endif
 "}}}
+
+Plug 'pechorin/any-jump.vim' "跳轉到定義和使用
 "}}}
 
 "編程·語言特色插件{{{
@@ -286,6 +290,8 @@ endif "}}}
 if HasPlugin("vim-workspace") "{{{
 	let g:workspace_session_directory = $HOME . '/.vim/sessions/'
 	let g:workspace_autosave_ignore = ['gitcommit', '.gitignore']
+	let g:workspace_session_disable_on_args = 1
+	let g:workspace_autosave = 0
 	nnoremap <leader>s :ToggleWorkspace<CR>
 endif "}}}
 
