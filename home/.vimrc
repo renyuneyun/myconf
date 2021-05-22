@@ -109,6 +109,12 @@ Plug 'lervag/vimtex' "TeX
 
 "自動補全框架及框架相關{{{
 if has('nvim') "deoplete爲neovim開發 TODO: 加入vim 8下的deoplete
+	Plug 'autozimu/LanguageClient-neovim', {
+		\ 'branch': 'next',
+		\ 'do': 'bash install.sh',
+		\ } "一個宣稱和deoplete共存良好的Language Server Protocol支持插件
+	Plug 'junegunn/fzf' " (Optional) Multi-entry selection UI.
+
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'Shougo/deoplete-clangx' "C-family languages
 	Plug 'davidhalter/jedi', { 'for': 'python' } "Python
@@ -297,12 +303,12 @@ endif "}}}
 
 if HasPlugin("echodoc.vim") "{{{
 	let g:echodoc#enable_at_startup = 1
-	if HasPlugin("vim-airline")
-		set noshowmode
-	elseif has('nvim')
-		let g:echodoc#type = 'virtual'
-		"let g:echodoc#type = 'floating'
+	if has('nvim')
+		" let g:echodoc#type = 'virtual'
+		let g:echodoc#type = 'floating'
 		"highlight link EchoDocFloat Pmenu
+	elseif HasPlugin("vim-airline")
+		set noshowmode
 	else
 		set cmdheight=2
 	endif
@@ -375,6 +381,25 @@ if HasPlugin("vim-gutentags") "{{{
 	" 禁用 gutentags 自动加载 gtags 数据库的行为
 	"let g:gutentags_auto_add_gtags_cscope = 0
 endif "}}}
+
+if HasPlugin("LanguageClient-neovim") "{{{
+	" Required for operations modifying multiple buffers like rename.
+	set hidden
+
+	let g:LanguageClient_serverCommands = {
+				\ 'rust': ['rustup', 'run', 'stable', 'rls'],
+				\ 'python': ['pyls'],
+				\ }
+
+	" note that if you are using Plug mapping you should not use `noremap` mappings.
+	nmap <F5> <Plug>(lcn-menu)
+	nmap <leader>l <Plug>(lcn-menu)
+	" Or map each action separately
+	nmap <silent>K <Plug>(lcn-hover)
+	nmap <silent> gd <Plug>(lcn-definition)
+	nmap <silent> <F2> <Plug>(lcn-rename)
+endif "}}}
+
 "1}}}
 
 "語言{{{1
