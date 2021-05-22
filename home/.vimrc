@@ -26,7 +26,7 @@ Plug 'mhinz/vim-startify' "起始頁面
 "Plug 'xolox/vim-session'
 Plug 'asins/vimcdoc' "vim中文幫助文檔
 
-if executable("fcitx") "fcitx自動切換{{{
+if executable("fcitx") || executable("fcitx5") "fcitx自動切換{{{
 	Plug 'lilydjwg/fcitx.vim'
 	"Plug 'vim-scripts/fcitx.vim'
 endif "}}}
