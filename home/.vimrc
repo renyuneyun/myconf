@@ -388,7 +388,7 @@ if HasPlugin("LanguageClient-neovim") "{{{
 
 	let g:LanguageClient_serverCommands = {
 				\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-				\ 'python': ['pyls'],
+				\ 'python': ['pylsp'],
 				\ }
 
 	" note that if you are using Plug mapping you should not use `noremap` mappings.
