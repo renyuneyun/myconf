@@ -5,7 +5,7 @@ TTY=`tty`
 
 export PATH="$PATH:$HOME/bin:$HOME/.cargo/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
-export EDITOR="vim"
+export EDITOR="vim --noplugin"
 
 export PYTHONPATH="$HOME/lib/python"
 
@@ -14,8 +14,12 @@ export GOPATH="$HOME/coding/go"
 export UNZIP="-O CP936"
 export ZIPINFO="-O CP936"
 
+# For Howdy to snooze warnings: https://wiki.archlinux.org/index.php/Howdy#GStreamer_warnings_in_shell
+export OPENCV_LOG_LEVEL=ERROR
+
 alias ls='ls --color=auto'
 alias ll='ls -l'
+alias lh='ls -lh'
 alias grep='grep --color'
 
 alias cd..='cd ..'
@@ -31,7 +35,14 @@ up() {
 
 alias vim='env -u PYTHONPATH vim'
 
+alias toclip-x='xclip -selection clipboard'
+alias toclip-wl='wl-copy <&0'
+alias is-x='[ $XDG_SESSION_TYPE = x11 ]'
+alias toclip='(is-x && toclip-x || toclip-wl)'
+alias to-clip=toclip
+
 alias pcss='proxychains -f ~/.proxychains/proxychains.ss.conf'
+alias pcc='proxychains -f ~/.proxychains/proxychains.c.conf'
 
 alias ns_wlan='sudo systemctl restart netctl-auto@wlp2s0.service'
 alias ns_rj='sudo systemctl restart rjsupplicant.service'
@@ -41,7 +52,12 @@ alias dicecompute='ssh -t dice ssh -t student.login ssh -t student.compute'
 
 alias closelcd="xset dpms force off"
 
+alias borg_backup_home="borg create --progress --stats --exclude-from $HOME/vcs/myscripts/shell/home.exclude ::home.$(date +%F) $HOME"
+
+alias join-lines="cat | tr '\n' ' ' | sed 's/[ \t]\+/ /g' | to-clip"
+
 F="$HOME/.todo/config-food" && [ -f "$F" ] && alias todo-food="todo.sh -d \"$F\"" && unset F
+F="$HOME/.todo/config-shopping" && [ -f "$F" ] && alias buy="todo.sh -d \"$F\"" && unset F
 
 command -v thefuck &>/dev/null && eval $(thefuck --alias)
 
