@@ -1,6 +1,6 @@
 if exists('g:GuiLoaded')
 	try
-		GuiFont! FuraCode\ Nerd\ Font:h16
+		GuiFont! FiraCode\ Nerd\ Font\ Mono:h16
 	catch
 		GuiFont! Fira\ Code\ Medium:h16
 	endtry
