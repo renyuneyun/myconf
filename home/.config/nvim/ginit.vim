@@ -5,6 +5,6 @@ if exists('g:GuiLoaded')
 		GuiFont! Fira\ Code\ Medium:h16
 	endtry
 else
-	set guifont=FiraCode\ Nerd\ Font:h16,Fira\ Code:h16,Monaco:h16,DejaVu\ Sans\ Mono:h16
+	set guifont=FiraCode\ Nerd\ Font\ Mono:h16,Fira\ Code:h16,Monaco:h16,DejaVu\ Sans\ Mono:h16
 endif
 
