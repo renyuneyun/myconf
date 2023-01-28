@@ -236,6 +236,17 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 "}}}
 "1}}}
 
+function! TrimSpaces()
+	" let _s=@/
+	" execute "%s/\s\+$//e"
+	let l = 1
+	for line in getline(1, "$")
+		call setline(l, substitute(line, '\s\+$', '', 'e'))
+		let l = l + 1
+	endfor
+	" let @/=_s
+endfunction
+
 "通常插件配置{{{1
 if HasPlugin("fcitx.vim") "{{{
 	set ttimeoutlen=100 "降低按鍵等待時間，以加快fcitx.vim響應
