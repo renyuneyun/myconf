@@ -5,8 +5,11 @@ else
 endif
 
 "vimrc輔助函數{{{1
-function! HasPlugin(name)
+function! HasColorscheme(name)
 	return has_key(g:plugs, a:name)
+endfunction
+function! HasPlugin(name)
+	return &loadplugins && has_key(g:plugs, a:name)
 endfunction
 "1}}}
 
@@ -169,7 +172,7 @@ endif
 if has('termguicolors')
 	set termguicolors
 endif
-if !HasPlugin('sonokai') "If has sonokai, then use sonokai (requires configuration, see below)
+if !HasColorscheme('sonokai') "If has sonokai, then use sonokai (requires configuration, see below)
 	colorscheme evening
 endif
 "2}}}
@@ -264,7 +267,7 @@ if HasPlugin("vim-airline") "{{{
 	nnoremap <C-s-tab> :bp<CR>
 endif "}}}
 
-if HasPlugin("sonokai") "{{{
+if HasColorscheme("sonokai") "{{{
 	let g:sonokai_style = 'atlantis'
 	let g:sonokai_enable_italic = 1
 	let g:sonokai_disable_italic_comment = 1
