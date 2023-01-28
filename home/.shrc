@@ -67,3 +67,8 @@ if [ -f $f_vw ]; then
 	source $f_vw
 	export WORKON_HOME=~/venvs
 fi
+
+pydbg() {
+  cmd="%run ""$@"
+  ipython --pdb -c "$cmd"
+}
