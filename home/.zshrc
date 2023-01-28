@@ -4,7 +4,7 @@ fi
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=2000
-SAVEHIST=2000
+SAVEHIST=20000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -44,8 +44,16 @@ f_aj=$HOME/.autojump/etc/profile.d/autojump.sh
 f_fzf_z=/home/ryey/vcs/fzf-z/fzf-z.plugin.zsh
 [[ -s $f_fzf_z ]] && source $f_fzf_z && export FZFZ_RECENT_DIRS_TOOL=autojump
 
+# fzf
+f_fzf_base=/usr/share/fzf
+f_fzf_kb=${f_fzf_base}/key-bindings.zsh
+f_fzf_cmp=${f_fzf_base}/completion.zsh
+[[ -s $f_fzf_kb ]] && source $f_fzf_kb
+[[ -s $f_fzf_cmp ]] && source $f_fzf_cmp
+
 # powerline {{{
 TTY=`tty`
-plscript='/usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh'
+PY_VER=$(python -c 'import sys; v=sys.version_info; print("%s.%s" % (v.major, v.minor))')
+plscript="/usr/lib/python${PY_VER}/site-packages/powerline/bindings/zsh/powerline.zsh"
 [[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
 # }}}
