@@ -45,6 +45,8 @@ if executable("ctags")
 endif
 
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' } "Profiling vim plugins
+
+Plug 'ActivityWatch/aw-watcher-vim' "Watcher for ActivityWatch
 "}}}
 
 "編程·UI{{{
@@ -323,6 +325,10 @@ if HasPlugin("echodoc.vim") "{{{
 	else
 		set cmdheight=2
 	endif
+endif "}}}
+
+if HasPlugin("aw-watcher-vim") "{{{
+	autocmd VimEnter * AWStart
 endif "}}}
 
 if HasPlugin('vimtex') "{{{
