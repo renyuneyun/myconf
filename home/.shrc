@@ -3,7 +3,7 @@ TTY=`tty`
 [[ ($TTY =~ /dev/ttyS?[0-9]*) ]] && export LANG='en_US.UTF-8' || export LANG='zh_CN.UTF-8'
 #1}}}
 
-export PATH="$PATH:$HOME/bin:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.cargo/bin:$HOME/.local/lib/npm/bin:$HOME/.local/install/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
 export EDITOR="vim --noplugin"
 
@@ -55,6 +55,7 @@ alias closelcd="xset dpms force off"
 alias borg_backup_home="borg create --progress --stats --exclude-from $HOME/vcs/myscripts/shell/home.exclude ::home.$(date +%F) $HOME"
 
 alias join-lines="cat | tr '\n' ' ' | sed 's/[ \t]\+/ /g' | to-clip"
+alias yay-rb="yay -S --rebuild --answerclean A --answerdiff N --noconfirm"
 
 F="$HOME/.todo/config-food" && [ -f "$F" ] && alias todo-food="todo.sh -d \"$F\"" && unset F
 F="$HOME/.todo/config-shopping" && [ -f "$F" ] && alias buy="todo.sh -d \"$F\"" && unset F
