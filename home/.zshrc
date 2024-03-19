@@ -28,6 +28,21 @@ if [ -f ~/.shrc ]; then
 	source ~/.shrc
 fi
 
+_lookup_locations=(
+	$HOME/vcs
+	/usr/share/zsh/plugins
+	/usr/share
+)
+
+function ifind {
+	for loc in $_lookup_locations; do
+		loc2=$loc/$1
+		if [ -d $loc2 ]; then
+			echo $loc2
+		fi
+	done
+}
+
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
@@ -45,11 +60,13 @@ f_fzf_z=/home/ryey/vcs/fzf-z/fzf-z.plugin.zsh
 [[ -s $f_fzf_z ]] && source $f_fzf_z && export FZFZ_RECENT_DIRS_TOOL=autojump
 
 # fzf
-f_fzf_base=/usr/share/fzf
-f_fzf_kb=${f_fzf_base}/key-bindings.zsh
-f_fzf_cmp=${f_fzf_base}/completion.zsh
-[[ -s $f_fzf_kb ]] && source $f_fzf_kb
-[[ -s $f_fzf_cmp ]] && source $f_fzf_cmp
+fzf_base=$(ifind fzf)
+if [ ! -z $fzf_base ]; then
+	fzf_kb=${fzf_base}/key-bindings.zsh
+	fzf_cmp=${fzf_base}/completion.zsh
+	source $fzf_kb
+	source $fzf_cmp
+fi
 
 # powerline {{{
 TTY=`tty`
