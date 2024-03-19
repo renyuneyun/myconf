@@ -68,9 +68,14 @@ if [ ! -z $fzf_base ]; then
 	source $fzf_cmp
 fi
 
-# powerline {{{
-TTY=`tty`
-PY_VER=$(python -c 'import sys; v=sys.version_info; print("%s.%s" % (v.major, v.minor))')
-plscript="/usr/lib/python${PY_VER}/site-packages/powerline/bindings/zsh/powerline.zsh"
-[[ ! ("$TTY" =~ /dev/ttyS?[0-9]*) ]] && if [ -f $plscript ]; then source $plscript; fi
+# Prompt line (starship or powerline) {{{
+if [[ ! (`tty` =~ /dev/ttyS?[0-9]+) ]]; then
+	if which starship >/dev/null; then
+		eval "$(starship init zsh)"
+	else
+		PY_VER=$(python -c 'import sys; v=sys.version_info; print("%s.%s" % (v.major, v.minor))')
+		plscript="/usr/lib/python${PY_VER}/site-packages/powerline/bindings/zsh/powerline.zsh"
+		if [ -f $plscript ]; then source $plscript; fi
+	fi
+fi
 # }}}
